@@ -1,0 +1,15 @@
+---
+title: Intro to Leaflet
+subtitle: Outline
+index: true
+permalink: /leaflet/index.html
+---
+<ul class="post-list">
+  {% for step in site.leaflet offset:1%}
+    <li class="content">
+      <h2>
+        <a class="post-link" href="{{ step.url | prepend: site.baseurl | remove:'index.html' }}">{{ step.subtitle }}</a>
+      </h2>
+    </li>
+  {% endfor %}
+</ul>

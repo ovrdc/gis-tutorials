@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta property="og:title" content="{{ page.title }}" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:url" content="{{ site.baseurl }}{{ page.url }}" />
+  <meta property="og:site_name" content="{{ site.title }}" />
+  <meta property="og:image" content="{{ site.baseurl }}/img/site-img.png" />
+  <meta property="og:image:width" content="1193" />
+  <meta property="og:image:height" content="848" />
+  <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  {% if page.layout == "leaflet" %}{% include leaflet/_leaflet-plugins.html %}{% endif %}
+</head>
+<style>
+{% include css/bulma.min.css %}
+{% include css/site.min.css %}
+</style>
+<body>
+  <nav class="nav has-shadow" id="top">
+    <div class="container">
+		  <div class="nav-left">
+			<a class="nav-item" href="{{site.baseurl}}/">
+			  <h3 class="title is-5">{{site.title}}</h3>
+			</a>
+		  </div>
+		  <span class="nav-toggle">
+			<span></span>
+			<span></span>
+			<span></span>
+		  </span>
+      <div class="nav-right nav-menu">
+        <a href="{{site.baseurl}}/" class="nav-item is-tab {% if page.home == true%}is-active{% endif%}">
+          Home
+        </a>
+        {% for collection in site.collections %}
+        {% if collection.label != "posts" %}<a href="{{site.baseurl}}/{{collection.label}}" class="nav-item is-tab {% if page.layout == collection.label %}is-active{%endif%}">
+          {{collection.label | capitalize}}
+        </a>{% endif %}
+        {% endfor %}
+        <!--span class="nav-item">
+          <a class="button">
+            Log in
+          </a>
+          <a class="button is-info">
+            Sign up
+          </a>
+        </span-->
+      </div>
+	  </div>
+  </nav>
+  <div class="section product-header">
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <span class="title is-3">{{page.title}}</span>
+          <span class="title is-3 has-text-muted">&nbsp;|&nbsp;</span>
+          <span class="title is-4 has-text-muted">{{page.subtitle}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{ content }}
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Bulma Framework</strong> by <a href="http://jgthms.com" target="_blank">Jeremy Thomas</a>. Theme adapted from <a href="https://github.com/dansup/bulma-templates" tager="_blank">Bulma Themes | Product</a>.
+          <br />
+          Bulma and original theme licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. Website content is in the Public Domain unless otherwise noted.
+        </p>
+        <p>
+          <a class="icon" href="https://github.com/ovrdc" target="_blank">
+            <i class="fa fa-github"></i>
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script>{% include js/bulma.js %}</script>
+</body>
+</html>

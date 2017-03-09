@@ -1,0 +1,33 @@
+---
+layout: main
+home: true
+title: OVRDC GIS Tutorials
+subtitle: Web Mapping, Desktop GIS & More...
+---
+<div class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-12">
+        {% for tutorial in site.collections %}
+        {% if tutorial.label != "posts" %}
+        <ul class="post-list">
+            <li class="content">
+              <h2>
+                <a class="post-link" href="{{ site.baseurl }}/{{ tutorial.label}}">{{ tutorial.label | capitalize }}</a>
+              </h2>
+              <p>
+                {{tutorial.about}}
+              </p>
+              <p>
+                {% for author in tutorial.authors %}
+                {{author}}<br />
+                {% endfor %}
+              </p>
+            </li>
+        </ul>
+        {% endif %}
+        {% endfor %}
+      </div>
+     </div>
+  </div>
+</div>

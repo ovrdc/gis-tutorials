@@ -1,0 +1,43 @@
+---
+layout: main
+---
+<div class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-12">
+        {% if page.index != true %}<div id="map">
+        </div>
+      </div>
+     </div>
+     <div>
+       {% if page.previous.url %}
+         <a class="is-pulled-left button is-success is-outlined" href="{{site.baseurl}}{{page.previous.url }}">&laquo; {{page.previous.subtitle}}</a>
+       {% endif %}
+       {% if page.next.url %}
+         <a class="is-pulled-right button is-success is-outlined" href="{{site.baseurl}}{{page.next.url }}">{{page.next.subtitle}} &raquo;</a>
+       {% endif %}
+     </div>
+  </div>
+</div>
+<div class="section">
+  <div class="container">
+    {% if page.index != true %}<div id="code" class="">
+    <pre style="background-color: #eee;">
+      <code class="javascript">{{ content }}
+      </code>
+    </pre>
+  </div>
+  <script>
+  {{content}}
+  </script>
+  {% endif %}
+  </div>
+</div>
+{% else %}
+        {{ content }}
+        </div>
+      </div>
+     </div>
+  </div>
+</div>
+{% endif %}
