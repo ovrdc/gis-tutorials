@@ -1,4 +1,4 @@
-A website with tutorials on desktop and web GIS.
+## A website with tutorials on desktop and web GIS.
 
 The website theme is based on the Bulma Project template - see below
 
