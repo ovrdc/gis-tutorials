@@ -5,11 +5,6 @@ description: "This site contains a series of web map tutorials and examples."
 twitter_username: getbounds
 github_username:  ovrdc
 
-# source Settings
-source:       _content
-layouts_dir:  _layouts
-includes_dir: _includes
-
 # Build settings
 baseurl: /gis-tutorials
 url: https://ovrdc.github.io
