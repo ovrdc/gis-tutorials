@@ -1,6 +1,11 @@
 var url = "{{site.baseurl}}/map-data/counties.topojson";
 
 var counties = L.geoJson(null, {
+  filter: function(feature) {
+    if (feature.properties.state == 39) {
+      return true
+    }
+  },
   style: function(feature) {
     switch (feature.properties.winner) {
       case "Trump":
@@ -24,3 +29,7 @@ var counties = L.geoJson(null, {
 layerControl.addOverlay(counties, "Counties");
 
 var cData = omnivore.topojson(url, null, counties);
+
+cData.on('ready', function() {
+  map.fitBounds(counties.getBounds())
+});

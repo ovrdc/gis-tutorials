@@ -3,6 +3,11 @@
 cData.on("ready", function() {
 	map.removeLayer(counties);
 	choropleth = L.choropleth(cData.toGeoJSON(), {
+    filter: function(feature) {
+      if (feature.properties.state == 39) {
+        return true
+      }
+    },
 		valueProperty: "POP_SQMI", // which property in the features to use
 		scale: ["white","#006d2c"], // chroma.js scale - include as many as you like
 		steps: 7, // number of breaks or steps in range
