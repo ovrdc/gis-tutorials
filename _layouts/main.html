@@ -58,7 +58,7 @@
     <div class="container">
       <div class="columns">
         <div class="column">
-          <span class="title is-3">{{page.title}}</span>
+          <span class="title is-3"><a href="{% if page.home != true %}{{site.baseurl}}/{{page.layout}}{% else%}#{% endif%}">{{page.title}}</a></span>
           <span class="title is-3 has-text-muted">&nbsp;|&nbsp;</span>
           <span class="title is-4 has-text-muted">{{page.subtitle}}</span>
         </div>
@@ -69,6 +69,9 @@
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
+        <p>
+          GIS & Data Visualization Tutorials by <a href="http://www.ovrdc.org">OVRDC</a> | Malcolm Meyer
+        </p>
         <p>
           <strong>Bulma Framework</strong> by <a href="http://jgthms.com" target="_blank">Jeremy Thomas</a>. Theme adapted from <a href="https://github.com/dansup/bulma-templates" tager="_blank">Bulma Themes | Product</a>
 		All content licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.

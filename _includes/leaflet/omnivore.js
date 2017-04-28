@@ -1,4 +1,4 @@
-var url = "{{site.baseurl}}/map-data/counties.topojson";
+var url = "{{site.baseurl}}/tutorial-data/counties.topojson";
 
 var counties = L.geoJson().addTo(map);
 

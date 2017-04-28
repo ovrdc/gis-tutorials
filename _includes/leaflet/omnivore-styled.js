@@ -1,4 +1,4 @@
-var url = "{{site.baseurl}}/map-data/counties.topojson";
+var url = "{{site.baseurl}}/tutorial-data/counties.topojson";
 
 var counties = L.geoJson(null, {
   filter: function(feature) {
@@ -10,11 +10,15 @@ var counties = L.geoJson(null, {
     switch (feature.properties.winner) {
       case "Trump":
         return {
-          fillColor: "red"
+          fillColor: "red",
+          color: 'white',
+          fillOpacity: 0.7
         }
       default:
         return {
-          fillColor: "blue"
+          fillColor: "blue",
+          color: 'white',
+          fillOpacity: 0.7
         }
     }
   },

@@ -16,18 +16,18 @@
   <meta property="og:description" content="var map = L.map("map");map.setView([40.3,-96.6], 5);L.hash(map);L.control.scale().addTo(map);var layerControl = new L.control.layers(null, null).addTo(map);/...">
   <link rel="canonical" href="http://localhost:4000/gis-tutorials/leaflet/04-styles-interaction">
     <!-- Leaflet -->
-  <link rel="stylesheet" href="/gis-tutorials/map-plugins/leaflet/leaflet.css" />
-  <script src="/gis-tutorials/map-plugins/leaflet/leaflet.js"></script>
+  <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/leaflet/leaflet.css" />
+  <script src="/gis-tutorials/leaflet/plugins/leaflet/leaflet.js"></script>
   <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
   <!-- Omnivore -->
-  <script src="/gis-tutorials/map-plugins/omnivore/leaflet-omnivore.min.js"></script>
+  <script src="/gis-tutorials/leaflet/plugins/omnivore/leaflet-omnivore.min.js"></script>
   <!-- Search -->
-  <link rel="stylesheet" href="/gis-tutorials/map-plugins/search/leaflet-search.min.css" />
-  <script src="/gis-tutorials/map-plugins/search/leaflet-search.min.js"></script>
+  <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/search/leaflet-search.min.css" />
+  <script src="/gis-tutorials/leaflet/plugins/search/leaflet-search.min.js"></script>
   <!--Choropleth -->
-  <script src="/gis-tutorials/map-plugins/choropleth/choropleth.js"></script>
+  <script src="/gis-tutorials/leaflet/plugins/choropleth/choropleth.js"></script>
   <!--Turf -->
-  <script src="/gis-tutorials/map-plugins/turf/turf.min.js"></script>
+  <script src="/gis-tutorials/leaflet/plugins/turf/turf.min.js"></script>
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
@@ -87,7 +87,7 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
     <div class="container">
       <div class="columns">
         <div class="column">
-          <span class="title is-3">Intro to Leaflet</span>
+          <span class="title is-3"><a href="/gis-tutorials/leaflet">Intro to Leaflet</a></span>
           <span class="title is-3 has-text-muted">&nbsp;|&nbsp;</span>
           <span class="title is-4 has-text-muted">Styling and Interaction</span>
         </div>
@@ -129,13 +129,13 @@ var layerControl = new L.control.layers(null, null).addTo(map);
 /*Easily add basemaps or baselayers with L.tileLayer wms layers can also be added with L.tileLayer.wms */
 
 var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-	maxZoom: 19,
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 }).addTo(map);
 
 layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
 
-var url = "/gis-tutorials/map-data/counties.topojson";
+var url = "/gis-tutorials/tutorial-data/counties.topojson";
 
 var counties = L.geoJson(null, {
   filter: function(feature) {
@@ -147,11 +147,15 @@ var counties = L.geoJson(null, {
     switch (feature.properties.winner) {
       case "Trump":
         return {
-          fillColor: "red"
+          fillColor: "red",
+          color: 'white',
+          fillOpacity: 0.7
         }
       default:
         return {
-          fillColor: "blue"
+          fillColor: "blue",
+          color: 'white',
+          fillOpacity: 0.7
         }
     }
   },
@@ -200,13 +204,13 @@ var layerControl = new L.control.layers(null, null).addTo(map);
 /*Easily add basemaps or baselayers with L.tileLayer wms layers can also be added with L.tileLayer.wms */
 
 var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-	maxZoom: 19,
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 }).addTo(map);
 
 layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
 
-var url = "/gis-tutorials/map-data/counties.topojson";
+var url = "/gis-tutorials/tutorial-data/counties.topojson";
 
 var counties = L.geoJson(null, {
   filter: function(feature) {
@@ -218,11 +222,15 @@ var counties = L.geoJson(null, {
     switch (feature.properties.winner) {
       case "Trump":
         return {
-          fillColor: "red"
+          fillColor: "red",
+          color: 'white',
+          fillOpacity: 0.7
         }
       default:
         return {
-          fillColor: "blue"
+          fillColor: "blue",
+          color: 'white',
+          fillOpacity: 0.7
         }
     }
   },
@@ -263,6 +271,9 @@ cData.on("ready", function() {
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
+        <p>
+          GIS & Data Visualization Tutorials by <a href="http://www.ovrdc.org">OVRDC</a> | Malcolm Meyer
+        </p>
         <p>
           <strong>Bulma Framework</strong> by <a href="http://jgthms.com" target="_blank">Jeremy Thomas</a>. Theme adapted from <a href="https://github.com/dansup/bulma-templates" tager="_blank">Bulma Themes | Product</a>
 		All content licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.
