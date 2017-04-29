@@ -69,7 +69,7 @@
     map.addControl(new mapboxgl.NavigationControl());
 
     map.on('style.load', function() {
-
+      map.flyTo(view1);
       map.addSource('counties', {
         'type': 'geojson',
         'data': 'tutorial-data/counties.geojson'
