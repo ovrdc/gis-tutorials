@@ -145,22 +145,27 @@
     });
     var x = 0;
     var y = 0;
+    var v2;
+
+    map.on('data', function() {
+      x = x + 1;
+    });
+    
     function logData() {
-      map.on('data', function() {
-        x = x + 1;
-        console.log(x);
-        checkData();
-      });
+      console.log(x);
+      y = y+1;
+      v2 = setTimeout(checkData, 1000);
     };
+    
     var myVar = setInterval(logData, 10);
     
     function checkData() {
-      if (y = x) {
+      if (y > x) {
         console.log(true);
         clearInterval(myVar);
+        clearInterval(v2);
       }
-      y = x;
-    }
+    }                            
       
 
   </script>
