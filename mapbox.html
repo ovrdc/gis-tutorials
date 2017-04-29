@@ -149,6 +149,7 @@
       map.on('data', function() {
         x = x + 1;
         console.log(x);
+        checkData();
       });
     };
     var myVar = setInterval(logData, 10);
@@ -159,11 +160,7 @@
         clearInterval(myVar);
       }
       y = x;
-
     }
-    
-    var myVar2 = setInterval(checkData, 500);
-
       
 
   </script>
