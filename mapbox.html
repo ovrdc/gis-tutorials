@@ -53,13 +53,15 @@
     </div>
   </div>
   <script>
-    var view = {center: [-89,39.5], zoom: 4, bearing: 0, pitch: 0, speed: 0.5, curve: 0.5};
+    //6/39.212/-81.651/-23.2/60
+    var view2 = {center: [-81.651,39.212], zoom: 6, bearing: -23.2, pitch: 60, speed: 0.5, curve: 0.5};
+    var view1 = {center: [-95.52, 39.94], zoom: 4, bearing: 0, pitch: 0, speed: 0.5, curve: 0.5};
     var map = new mapboxgl.Map({
       container: 'map',
       hash: true,
       //style: 'https://www.ovrdc.org/apps/assets/mapboxgl/openmaptiles/osm-bright/style.json',
       style: 'tutorial-data/blank.json',
-      center: [-89, 39.5],
+      center: [-95.52, 39.94],
       zoom: 4,
       debug: 1
     });
@@ -129,10 +131,12 @@
           map.setLayoutProperty('president', 'visibility', 'none');
           map.setLayoutProperty('popsqmi', 'visibility', 'visible');
           ex.className = 'active';
+          map.flyTo(view2);
         }else{
           map.setLayoutProperty('president', 'visibility', 'visible');
           map.setLayoutProperty('popsqmi', 'visibility', 'none');
           ex.className = '';
+          map.flyT0(view1);
         }
       });
 
