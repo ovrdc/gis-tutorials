@@ -54,7 +54,7 @@
   </div>
   <script>
     //6/39.212/-81.651/-23.2/60
-    var view2 = {center: [-81.651,39.212], zoom: 6, bearing: -23.2, pitch: 60, speed: 0.5, curve: 0.5};
+    var view2 = {center: [-80.6,39.1], zoom: 5, bearing: -18.1, pitch: 60, speed: 0.5, curve: 0.5};
     var view1 = {center: [-95.52, 39.94], zoom: 4, bearing: 0, pitch: 0, speed: 0.5, curve: 0.5};
     var map = new mapboxgl.Map({
       container: 'map',
@@ -128,10 +128,12 @@
       var ex = document.getElementById('extrude');
       ex.addEventListener('click', function() {
         if ( (map.getLayoutProperty('president', 'visibility')) === 'visible') {
-          map.setLayoutProperty('president', 'visibility', 'none');
           map.setLayoutProperty('popsqmi', 'visibility', 'visible');
           ex.className = 'active';
-          map.flyTo(view2);
+          setTimeout(function() {
+            map.flyTo(view2);
+            map.setLayoutProperty('president', 'visibility', 'none');
+          }, 500);
         }else{
           map.setLayoutProperty('president', 'visibility', 'visible');
           map.setLayoutProperty('popsqmi', 'visibility', 'none');
