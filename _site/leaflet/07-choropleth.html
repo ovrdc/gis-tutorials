@@ -13,7 +13,7 @@
   <meta property="og:image" content="/gis-tutorials/img/site-img.png" />
   <meta property="og:image:width" content="1193" />
   <meta property="og:image:height" content="848" />
-  <meta property="og:description" content="var map = L.map("map");map.setView([40.3,-96.6], 5);L.hash(map);L.control.scale().addTo(map);var layerControl = new L.control.layers(null, null).addTo(map);/...">
+  <meta property="og:description" content="/* Custom CSS*//*.legend {color: #555;padding: 6px 8px;font: 12px Arial, Helvetica, sans-serif;font-weight: bold;background: white;box-shadow: 0 0 15px rgba(...">
   <link rel="canonical" href="http://localhost:4000/gis-tutorials/leaflet/07-choropleth">
     <!-- Leaflet -->
   <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/leaflet/leaflet.css" />
@@ -47,6 +47,8 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   }
 }
 
+.legend { color: #555; padding: 6px 8px; font: 12px Arial, Helvetica, sans-serif; font-weight: bold; background: white; box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .legend ul { list-style-type: none; padding: 0; margin: 0; clear: both; } .legend li { display: inline-block; width: 30px; height: 22px; opacity: 0.7; } .legend .min { float: left; padding-bottom: 5px; } .legend .max { float: right; }
+.content {font-size:18px;}
 </style>
 <body>
   <nav class="nav has-shadow" id="top">
@@ -98,6 +100,9 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div class="columns">
       <div class="column is-12">
+        <div class="content">
+          
+        </div>
         <div id="map">
         </div>
         <div>
@@ -117,7 +122,39 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div id="code" class="">
     <pre style="background-color: #eee;">
-      <code class="javascript">var map = L.map("map");
+      <code class="javascript">
+/* Custom CSS*/
+/*
+.legend {
+color: #555;
+padding: 6px 8px;
+font: 12px Arial, Helvetica, sans-serif;
+font-weight: bold;
+background: white;
+box-shadow: 0 0 15px rgba(0,0,0,0.2);
+border-radius: 5px;
+}
+.legend ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+clear: both;
+}
+.legend li {
+display: inline-block;
+width: 30px;
+height: 22px;
+opacity: 0.7;
+}
+.legend .min {
+float: left;
+padding-bottom: 5px;
+}
+.legend .max {
+float: right;
+}
+*/
+var map = L.map("map");
 
 map.setView([40.3,-96.6], 5);
 
@@ -210,15 +247,69 @@ cData.on("ready", function() {
       layer.bindTooltip(feature.properties.NAME + '<' + 'br' + '>' + +feature.properties.POPULATION)
     }
   }).addTo(map);
+
   layerControl.addOverlay(choropleth, "Choropleth");
+
+  /*Legend Custom Leaflet Control*/
+  var legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend')
+    var colors = choropleth.options.colors
+    var labels = []
+
+    /* Add min & max*/
+    div.innerHTML = '<div><h3 style="font-weight:bolder;font-size:larger;">Population Density</h3><br></div><div class="labels"><div class="min">Low</div> \
+  <div class="max">High</div></div>'
+
+  for (i = 1; i < colors.length; i++) {
+      labels.push('<li style="background-color: ' + colors[i] + '"></li>')
+    }
+
+    div.innerHTML += '<ul style="list-style-type:none;display:flex">' + labels.join('') + '</ul>'
+    return div
+  }
+
+  legend.addTo(map);
 });
 
 
       </code>
     </pre>
   </div>
+  
   <script>
-  var map = L.map("map");
+  /* Custom CSS*/
+/*
+.legend {
+color: #555;
+padding: 6px 8px;
+font: 12px Arial, Helvetica, sans-serif;
+font-weight: bold;
+background: white;
+box-shadow: 0 0 15px rgba(0,0,0,0.2);
+border-radius: 5px;
+}
+.legend ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+clear: both;
+}
+.legend li {
+display: inline-block;
+width: 30px;
+height: 22px;
+opacity: 0.7;
+}
+.legend .min {
+float: left;
+padding-bottom: 5px;
+}
+.legend .max {
+float: right;
+}
+*/
+var map = L.map("map");
 
 map.setView([40.3,-96.6], 5);
 
@@ -311,11 +402,34 @@ cData.on("ready", function() {
       layer.bindTooltip(feature.properties.NAME + '<' + 'br' + '>' + +feature.properties.POPULATION)
     }
   }).addTo(map);
+
   layerControl.addOverlay(choropleth, "Choropleth");
+
+  /*Legend Custom Leaflet Control*/
+  var legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend')
+    var colors = choropleth.options.colors
+    var labels = []
+
+    /* Add min & max*/
+    div.innerHTML = '<div><h3 style="font-weight:bolder;font-size:larger;">Population Density</h3><br></div><div class="labels"><div class="min">Low</div> \
+  <div class="max">High</div></div>'
+
+  for (i = 1; i < colors.length; i++) {
+      labels.push('<li style="background-color: ' + colors[i] + '"></li>')
+    }
+
+    div.innerHTML += '<ul style="list-style-type:none;display:flex">' + labels.join('') + '</ul>'
+    return div
+  }
+
+  legend.addTo(map);
 });
 
 
   </script>
+  
   
   </div>
 </div>

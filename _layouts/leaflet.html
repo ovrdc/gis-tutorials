@@ -5,10 +5,13 @@ layout: main
   <div class="container">
     <div class="columns">
       <div class="column is-12">
+        <div class="content">
+          {{page.description}}
+        </div>
         {% if page.index != true %}<div id="map">
         </div>
         <div>
-          {% if page.description %}{{page.description}}{%endif%}
+          {% if page.note %}{{page.note}}{%endif%}
         </div>
       </div>
      </div>
@@ -26,13 +29,16 @@ layout: main
   <div class="container">
     {% if page.index != true %}<div id="code" class="">
     <pre style="background-color: #eee;">
-      <code class="javascript">{{ content }}
+      <code class="{% if page.map != false%}javascript{% else%}html{%endif%}">
+{{ content }}
       </code>
     </pre>
   </div>
+  {% if page.map != false %}
   <script>
   {{content}}
   </script>
+  {% endif %}
   {% endif %}
   </div>
 </div>

@@ -20,6 +20,8 @@
 <style>
 {% include css/bulma.min.css %}
 {% include css/site.min.css %}
+{% if page.css %}{{page.css}}{% endif %}
+.content {font-size:18px;}
 </style>
 <body>
   <nav class="nav has-shadow" id="top">

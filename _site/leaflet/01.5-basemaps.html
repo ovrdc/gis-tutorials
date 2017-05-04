@@ -47,6 +47,8 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   }
 }
 
+
+.content {font-size:18px;}
 </style>
 <body>
   <nav class="nav has-shadow" id="top">
@@ -98,6 +100,9 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div class="columns">
       <div class="column is-12">
+        <div class="content">
+          The only thing added to this map is the raster tile layer. In this case we are using the OpenStreetMap HOT style. 
+        </div>
         <div id="map">
         </div>
         <div>
@@ -119,7 +124,8 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div id="code" class="">
     <pre style="background-color: #eee;">
-      <code class="javascript">var map = L.map("map");
+      <code class="javascript">
+var map = L.map("map");
 
 map.setView([40.3,-96.6], 5);
 
@@ -142,6 +148,7 @@ layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
       </code>
     </pre>
   </div>
+  
   <script>
   var map = L.map("map");
 
@@ -164,6 +171,7 @@ layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
 
 
   </script>
+  
   
   </div>
 </div>

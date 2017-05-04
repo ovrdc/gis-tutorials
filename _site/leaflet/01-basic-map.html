@@ -47,6 +47,8 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   }
 }
 
+
+.content {font-size:18px;}
 </style>
 <body>
   <nav class="nav has-shadow" id="top">
@@ -98,6 +100,9 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div class="columns">
       <div class="column is-12">
+        <div class="content">
+          This is a basic map, <pre style="display:inline;"><code style="display:inline;">var map = L.map('map');</code></pre> where 'map' is both the variable and the name of the div id where we want to place the map. The scale and layer control are built-in Leaflet functions. The hash is a simple plugin which puts the current mouse location in the browser url bar. This comes in handy for troubleshooting as well as sharing the exact map location. The view can be set as an option when calling the map, or by using the <code>setView function</code>. <br /><br /> The full code of all the examples can be seen below the map.
+        </div>
         <div id="map">
         </div>
         <div>
@@ -119,7 +124,8 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div id="code" class="">
     <pre style="background-color: #eee;">
-      <code class="javascript">var map = L.map("map");
+      <code class="javascript">
+var map = L.map("map");
 
 map.setView([40.3,-96.6], 5);
 
@@ -133,6 +139,7 @@ var layerControl = new L.control.layers(null, null).addTo(map);
       </code>
     </pre>
   </div>
+  
   <script>
   var map = L.map("map");
 
@@ -146,6 +153,7 @@ var layerControl = new L.control.layers(null, null).addTo(map);
 
 
   </script>
+  
   
   </div>
 </div>

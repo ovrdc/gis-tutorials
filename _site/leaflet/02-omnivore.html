@@ -47,6 +47,8 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   }
 }
 
+
+.content {font-size:18px;}
 </style>
 <body>
   <nav class="nav has-shadow" id="top">
@@ -98,6 +100,9 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div class="columns">
       <div class="column is-12">
+        <div class="content">
+          
+        </div>
         <div id="map">
         </div>
         <div>
@@ -119,7 +124,8 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   <div class="container">
     <div id="code" class="">
     <pre style="background-color: #eee;">
-      <code class="javascript">var map = L.map("map");
+      <code class="javascript">
+var map = L.map("map");
 
 map.setView([40.3,-96.6], 5);
 
@@ -151,6 +157,7 @@ var cData = omnivore.topojson(url, null, counties);
       </code>
     </pre>
   </div>
+  
   <script>
   var map = L.map("map");
 
@@ -182,6 +189,7 @@ var cData = omnivore.topojson(url, null, counties);
 
 
   </script>
+  
   
   </div>
 </div>

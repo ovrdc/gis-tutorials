@@ -3,6 +3,7 @@
 <head>
 	<title>Leaflet Map Intro</title>
 	<meta charset="utf-8" />
+  <!--setting viewport is important for proper mobile scaling-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Leaflet -->
 	<link rel="stylesheet" href="_leaflet/plugins/leaflet/leaflet.css" />
@@ -28,11 +29,27 @@
 			height:100%;
 			background:whitesmoke;
 		}
+    #coord {
+      position: absolute;
+      bottom: 0;
+      left:0;
+      background: white;
+      color: #0078A8;
+      font-size: 11px;
+    }
   </style>
 </head>
 <body>
-<div id="map"></div>
+<div id="map">
+<div id="coord"></div>
+</div>
 <script>
+var map = new L.map('map');
+map.setView([39,-82], 10);
+var coord = document.getElementById("coord");
+map.on('mousemove', function(e) {
+  coord.innerHTML = e.latlng.lat + ', ' + e.latlng.lng;
+});
 </script>
 </body>
 </html>
