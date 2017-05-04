@@ -101,7 +101,16 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
     <div class="columns">
       <div class="column is-12">
         <div class="content">
-          The only thing added to this map is the raster tile layer. In this case we are using the OpenStreetMap HOT style. 
+          Basemaps are an important feature to most maps. Here we are using the raster OpenStreetMap HOT basemap. The <a href="http://leaflet-extras.github.io/leaflet-providers/preview/index.html" target="_blank">Leaflet Providers</a> plugin provides a great resource for available tile layers. Understand however that some tile layers require a key or have strict usage guidelines. This same method can be used to add WMS layers. Once we add the tile layer, we can then add it to the layer control we defined in step one.<br /><br />
+<pre><code class="javascript hljs"> /*Easily add basemaps or baselayers with L.tileLayer wms layers can also be added with L.tileLayer.wms */
+
+  var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap, Tiles courtesy of Humanitarian OpenStreetMap Team'
+  }).addTo(map);
+
+  layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
+</code></pre>
         </div>
         <div id="map">
         </div>
@@ -121,7 +130,9 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   </div>
 </div>
 <div class="section">
-  <div class="container">
+  <div class="container content">
+    
+    <h4>Full Map Code</h4>
     <div id="code" class="">
     <pre style="background-color: #eee;">
       <code class="javascript">

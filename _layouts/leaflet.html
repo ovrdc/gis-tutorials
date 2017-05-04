@@ -26,8 +26,10 @@ layout: main
   </div>
 </div>
 <div class="section">
-  <div class="container">
-    {% if page.index != true %}<div id="code" class="">
+  <div class="container content">
+    {% if page.index != true %}
+    <h4>Full Map Code</h4>
+    <div id="code" class="">
     <pre style="background-color: #eee;">
       <code class="{% if page.map != false%}javascript{% else%}html{%endif%}">
 {{ content }}

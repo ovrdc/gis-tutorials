@@ -101,7 +101,7 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
     <div class="columns">
       <div class="column is-12">
         <div class="content">
-          
+          One of the benefits of Leaflet is the vast amount of free plugins avaible. In this map we are using the Leaflet Search plugin. It provides either a global address search or a feature search. Here we are searching the County layer on the 'NAME' field. However, since we are searching data that must be loaded into the browser, we have to wait until the data is loaded before we can call the search function. The omnivore plugin solves this for us since it has a built in event that is fired once the data is loaded. If you are using jQuery to load the data, you can use the <code>.done()</code> method.
         </div>
         <div id="map">
         </div>
@@ -121,7 +121,9 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   </div>
 </div>
 <div class="section">
-  <div class="container">
+  <div class="container content">
+    
+    <h4>Full Map Code</h4>
     <div id="code" class="">
     <pre style="background-color: #eee;">
       <code class="javascript">

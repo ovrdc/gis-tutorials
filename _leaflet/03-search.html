@@ -1,6 +1,8 @@
 ---
 title: Intro to Leaflet
 subtitle: Searching Layers via Leaflet Search
+description: >-
+  One of the benefits of Leaflet is the vast amount of free plugins avaible. In this map we are using the Leaflet Search plugin. It provides either a global address search or a feature search. Here we are searching the County layer on the 'NAME' field. However, since we are searching data that must be loaded into the browser, we have to wait until the data is loaded before we can call the search function. The omnivore plugin solves this for us since it has a built in event that is fired once the data is loaded. If you are using jQuery to load the data, you can use the <code>.done()</code> method.
 ---
 {% include leaflet/basic.js %}
 {% include leaflet/basemaps.js %}
