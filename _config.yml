@@ -6,7 +6,6 @@ twitter_username: getbounds
 github_username:  ovrdc
 
 #source files
-source: ./_dev
 layouts_dir:  _jekyll/_layouts
 includes_dir: _jekyll/_includes
 include: ["_pages"]
