@@ -5,32 +5,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Intro to Leaflet</title>
-  <meta property="og:title" content="Intro to Leaflet" />
+  <title>Mapbox GL JS Examples</title>
+  <meta property="og:title" content="Mapbox GL JS Examples" />
   <meta property="og:type" content="blog" />
-  <meta property="og:url" content="/gis-tutorials/leaflet/index.html" />
+  <meta property="og:url" content="/gis-tutorials/mapbox/index.html" />
   <meta property="og:site_name" content="OVRDC GIS Tutorials" />
   <meta property="og:image" content="/gis-tutorials/img/site-img.png" />
   <meta property="og:image:width" content="1193" />
   <meta property="og:image:height" content="848" />
-  <meta property="og:description" content="This is a basic introduction to the Leaflet JavaScript API. The Leaflet homepage also has great tutorials, and there are many more out on the web. This site ...">
-  <link rel="canonical" href="http://localhost:4000/gis-tutorials/leaflet/">
+  <meta property="og:description" content="                    Choropleth Maps            ">
+  <link rel="canonical" href="http://localhost:4000/gis-tutorials/mapbox/">
   
-    <!-- Leaflet -->
-  <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/leaflet/leaflet.css" />
-  <script src="/gis-tutorials/leaflet/plugins/leaflet/leaflet.js"></script>
-  <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
-  <!-- Omnivore -->
-  <script src="/gis-tutorials/leaflet/plugins/omnivore/leaflet-omnivore.min.js"></script>
-  <!-- Search -->
-  <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/search/leaflet-search.min.css" />
-  <script src="/gis-tutorials/leaflet/plugins/search/leaflet-search.min.js"></script>
-  <!--Choropleth -->
-  <script src="/gis-tutorials/leaflet/plugins/choropleth/choropleth.js"></script>
-  <!--Turf -->
-  <script src="/gis-tutorials/leaflet/plugins/turf/turf.min.js"></script>
-
   
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
   
   
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
@@ -74,11 +62,11 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
           Home
         </a>
         
-        <a href="/gis-tutorials/leaflet" class="nav-item is-tab is-active">
+        <a href="/gis-tutorials/leaflet" class="nav-item is-tab ">
           Leaflet
         </a>
         
-        <a href="/gis-tutorials/mapbox" class="nav-item is-tab ">
+        <a href="/gis-tutorials/mapbox" class="nav-item is-tab is-active">
           Mapbox
         </a>
         
@@ -99,7 +87,7 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
     <div class="container">
       <div class="columns">
         <div class="column">
-          <span class="title is-3"><a href="/gis-tutorials/leaflet">Intro to Leaflet</a></span>
+          <span class="title is-3"><a href="/gis-tutorials/mapbox">Mapbox GL JS Examples</a></span>
           <span class="title is-3 has-text-muted">&nbsp;|&nbsp;</span>
           <span class="title is-4 has-text-muted">Outline</span>
         </div>
@@ -112,55 +100,11 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
       <div class="column is-12">
         
         
-        <p>This is a basic introduction to the <a href="http://leafletjs.com">Leaflet JavaScript API</a>. The Leaflet homepage also has great <a href="http://leafletjs.com/examples.html">tutorials</a>, and there are many more out on the web. This site and these first set of tutorials was originally created for a workshop at the 2017 <a href="https://www.ohurisa.org">Ohio URISA</a> GIS Education Series.</p>
-
-<ul class="post-list">
+        <ul class="post-list">
   
     <li class="content">
       <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/01-basic-map/">Basic Leaflet Map</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/01.5-basemaps/">Adding Basemaps (Tile Layers)</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/02-omnivore/">Adding Data via Omnivore</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/03-search/">Searching Layers via Leaflet Search</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/04-styles-interaction/">Styling and Interaction</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/05-points/">Adding and Styling Points</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/06-turf-within/">GIS Analysis: Turf Within</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/07-choropleth/">Leaflet Choropleth</a>
+        <a class="post-link" href="/gis-tutorials/mapbox/05-2-choropleth/">Choropleth Maps</a>
       </h3>
     </li>
   

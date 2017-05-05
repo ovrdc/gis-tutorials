@@ -15,13 +15,23 @@
   <meta property="og:image:height" content="848" />
   <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-  {% if page.layout == "leaflet" %}{% include leaflet/_leaflet-plugins.html %}{% endif %}
+  {% if page.layout == "leaflet" %}
+  {% include leaflet/_leaflet-plugins.html %}
+  {% endif %}
+  {% if page.layout == "mapbox" %}
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+  {% endif %}
+  {% if page.layout == "leaflet" or page.layout == "mapbox" %}
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  {% endif %}
 </head>
 <style>
 {% include css/bulma.min.css %}
 {% include css/site.min.css %}
 {% if page.css %}{{page.css}}{% endif %}
-.content {font-size:18px;}
 </style>
 <body>
   <nav class="nav has-shadow" id="top">
@@ -75,13 +85,14 @@
           GIS & Data Visualization Tutorials by <a href="http://www.ovrdc.org">OVRDC</a> | Malcolm Meyer
         </p>
         <p>
+          This site is built with <a href="https://jekyllrb.com">Jekyll</a> and hosted with <i class="fa fa-heart"></i> on <a href="https://github.com/ovrdc" target="_blank">GitHub <i class="fa fa-github fa-lg"></i></a>
+        </p>
+        <p>
           <strong>Bulma Framework</strong> by <a href="http://jgthms.com" target="_blank">Jeremy Thomas</a>. Theme adapted from <a href="https://github.com/dansup/bulma-templates" tager="_blank">Bulma Themes | Product</a>
 		All content licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.
         </p>
         <p>
-          <a class="icon" href="https://github.com/ovrdc" target="_blank">
-            <i class="fa fa-github"></i>
-          </a>
+
         </p>
       </div>
     </div>

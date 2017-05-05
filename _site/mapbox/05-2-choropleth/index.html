@@ -5,32 +5,20 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Intro to Leaflet</title>
-  <meta property="og:title" content="Intro to Leaflet" />
+  <title>Mapbox GL JS</title>
+  <meta property="og:title" content="Mapbox GL JS" />
   <meta property="og:type" content="blog" />
-  <meta property="og:url" content="/gis-tutorials/leaflet/index.html" />
+  <meta property="og:url" content="/gis-tutorials/mapbox/05-2-choropleth/" />
   <meta property="og:site_name" content="OVRDC GIS Tutorials" />
   <meta property="og:image" content="/gis-tutorials/img/site-img.png" />
   <meta property="og:image:width" content="1193" />
   <meta property="og:image:height" content="848" />
-  <meta property="og:description" content="This is a basic introduction to the Leaflet JavaScript API. The Leaflet homepage also has great tutorials, and there are many more out on the web. This site ...">
-  <link rel="canonical" href="http://localhost:4000/gis-tutorials/leaflet/">
+  <meta property="og:description" content="var mapdiv = document.getElementById('map');var button = document.createElement("div", "extrude");button.setAttribute("id", "extrude");button.innerHTML = "3D...">
+  <link rel="canonical" href="http://localhost:4000/gis-tutorials/mapbox/05-2-choropleth/">
   
-    <!-- Leaflet -->
-  <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/leaflet/leaflet.css" />
-  <script src="/gis-tutorials/leaflet/plugins/leaflet/leaflet.js"></script>
-  <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
-  <!-- Omnivore -->
-  <script src="/gis-tutorials/leaflet/plugins/omnivore/leaflet-omnivore.min.js"></script>
-  <!-- Search -->
-  <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/search/leaflet-search.min.css" />
-  <script src="/gis-tutorials/leaflet/plugins/search/leaflet-search.min.js"></script>
-  <!--Choropleth -->
-  <script src="/gis-tutorials/leaflet/plugins/choropleth/choropleth.js"></script>
-  <!--Turf -->
-  <script src="/gis-tutorials/leaflet/plugins/turf/turf.min.js"></script>
-
   
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
   
   
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
@@ -54,7 +42,23 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
   }
 }
 
-
+#extrude {
+  position: absolute;
+  top: 110px;
+  right: 10px;
+  z-index: 9999;
+  border-radius: 2px;
+  background: white;
+  width: 30px;
+  padding: 7px 0;
+  text-align: center;
+  display: block;
+  font-size: larger;
+  cursor: pointer;
+} .active {
+  font-weight: bold;
+  color: orange;
+}
 </style>
 <body>
   <nav class="nav has-shadow" id="top">
@@ -74,11 +78,11 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
           Home
         </a>
         
-        <a href="/gis-tutorials/leaflet" class="nav-item is-tab is-active">
+        <a href="/gis-tutorials/leaflet" class="nav-item is-tab ">
           Leaflet
         </a>
         
-        <a href="/gis-tutorials/mapbox" class="nav-item is-tab ">
+        <a href="/gis-tutorials/mapbox" class="nav-item is-tab is-active">
           Mapbox
         </a>
         
@@ -99,9 +103,9 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
     <div class="container">
       <div class="columns">
         <div class="column">
-          <span class="title is-3"><a href="/gis-tutorials/leaflet">Intro to Leaflet</a></span>
+          <span class="title is-3"><a href="/gis-tutorials/mapbox">Mapbox GL JS</a></span>
           <span class="title is-3 has-text-muted">&nbsp;|&nbsp;</span>
-          <span class="title is-4 has-text-muted">Outline</span>
+          <span class="title is-4 has-text-muted">Choropleth Maps</span>
         </div>
       </div>
     </div>
@@ -111,64 +115,230 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
     <div class="columns">
       <div class="column is-12">
         
-        
-        <p>This is a basic introduction to the <a href="http://leafletjs.com">Leaflet JavaScript API</a>. The Leaflet homepage also has great <a href="http://leafletjs.com/examples.html">tutorials</a>, and there are many more out on the web. This site and these first set of tutorials was originally created for a workshop at the 2017 <a href="https://www.ohurisa.org">Ohio URISA</a> GIS Education Series.</p>
-
-<ul class="post-list">
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/01-basic-map/">Basic Leaflet Map</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/01.5-basemaps/">Adding Basemaps (Tile Layers)</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/02-omnivore/">Adding Data via Omnivore</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/03-search/">Searching Layers via Leaflet Search</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/04-styles-interaction/">Styling and Interaction</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/05-points/">Adding and Styling Points</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/06-turf-within/">GIS Analysis: Turf Within</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/07-choropleth/">Leaflet Choropleth</a>
-      </h3>
-    </li>
-  
-</ul>
-
+        <div id="map">
+        </div>
+        <div>
+          
         </div>
       </div>
      </div>
+     <div>
+       
+         <a class="is-pulled-left button is-success is-outlined" href="/gis-tutorials/mapbox/index.html">&laquo; Outline</a>
+       
+       
+     </div>
+  </div>
+</div>
+<div class="section">
+  <div class="container content">
+    
+    <h4>Full Map Code</h4>
+    <div id="code" class="">
+    <pre style="background-color: #eee;">
+      <code class="javascript">
+var mapdiv = document.getElementById('map');
+var button = document.createElement("div", "extrude");
+button.setAttribute("id", "extrude");
+button.innerHTML = "3D";
+mapdiv.appendChild(button);
+
+var view2 = {center: [-80.6,39.1], zoom: 5, bearing: -18.1, pitch: 60, speed: 0.2, curve: 0.7};
+var view1 = {center: [-95.52, 39.94], zoom: 4, bearing: 0, pitch: 0, speed: 0.5, curve: 0.5};
+var map = new mapboxgl.Map({
+  container: 'map',
+  hash: true,
+  /*style: 'https://www.ovrdc.org/apps/assets/mapboxgl/openmaptiles/osm-bright/style.json',*/
+  style: '/gis-tutorials/tutorial-data/blank.json',
+  center: [-95.52, 39.94],
+  zoom: 4,
+  debug: 1
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+
+map.on('style.load', function() {
+  map.flyTo(view1);
+  map.addSource('counties', {
+    'type': 'geojson',
+    'data': '/gis-tutorials/tutorial-data/counties.geojson'
+  });
+  map.addLayer({
+    'id': 'president',
+    'type': 'fill',
+    'source': 'counties',
+    'layout': {
+      'visibility': 'visible'
+    },
+    'paint': {
+      'fill-color': {
+        'property': 'popsqmi',
+        'stops': [
+          [1, 'white'],
+          [25, 'orange'],
+          [1000, 'firebrick']
+        ]
+      },
+      'fill-outline-color': 'white',
+      'fill-opacity': 0.9
+    }
+  });
+
+  // this would be different for mapbox styles
+  map.addLayer({
+    'id': 'popsqmi',
+    'type': 'fill-extrusion',
+    'source': 'counties',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-extrusion-color': {
+        'property': 'popsqmi',
+        'stops': [
+          [1, 'white'],
+          [25, 'orange'],
+          [1000, 'firebrick']
+        ]
+      },
+      'fill-extrusion-height': {
+        "property": 'popsqmi',
+        "stops": [
+          [1, 0],
+          [25, 1000],
+          [1000, 65535]
+        ]
+      },
+      'fill-extrusion-opacity': 0.9,
+      'fill-extrusion-base': 0
+    }
+  }); // this would be different for mapbox styles
+
+  var ex = document.getElementById('extrude');
+  ex.addEventListener('click', function() {
+    if ( (map.getLayoutProperty('president', 'visibility')) === 'visible') {
+      map.setLayoutProperty('popsqmi', 'visibility', 'visible');
+      ex.className = 'active';
+      setTimeout(function() {
+        map.flyTo(view2);
+        map.setLayoutProperty('president', 'visibility', 'none');
+      }, 2000);
+    }else{
+      map.setLayoutProperty('president', 'visibility', 'visible');
+      map.setLayoutProperty('popsqmi', 'visibility', 'none');
+      ex.className = '';
+      map.flyTo(view1);
+    }
+  });
+
+});
+
+
+      </code>
+    </pre>
+  </div>
+  
+  <script>
+  var mapdiv = document.getElementById('map');
+var button = document.createElement("div", "extrude");
+button.setAttribute("id", "extrude");
+button.innerHTML = "3D";
+mapdiv.appendChild(button);
+
+var view2 = {center: [-80.6,39.1], zoom: 5, bearing: -18.1, pitch: 60, speed: 0.2, curve: 0.7};
+var view1 = {center: [-95.52, 39.94], zoom: 4, bearing: 0, pitch: 0, speed: 0.5, curve: 0.5};
+var map = new mapboxgl.Map({
+  container: 'map',
+  hash: true,
+  /*style: 'https://www.ovrdc.org/apps/assets/mapboxgl/openmaptiles/osm-bright/style.json',*/
+  style: '/gis-tutorials/tutorial-data/blank.json',
+  center: [-95.52, 39.94],
+  zoom: 4,
+  debug: 1
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+
+map.on('style.load', function() {
+  map.flyTo(view1);
+  map.addSource('counties', {
+    'type': 'geojson',
+    'data': '/gis-tutorials/tutorial-data/counties.geojson'
+  });
+  map.addLayer({
+    'id': 'president',
+    'type': 'fill',
+    'source': 'counties',
+    'layout': {
+      'visibility': 'visible'
+    },
+    'paint': {
+      'fill-color': {
+        'property': 'popsqmi',
+        'stops': [
+          [1, 'white'],
+          [25, 'orange'],
+          [1000, 'firebrick']
+        ]
+      },
+      'fill-outline-color': 'white',
+      'fill-opacity': 0.9
+    }
+  });
+
+  // this would be different for mapbox styles
+  map.addLayer({
+    'id': 'popsqmi',
+    'type': 'fill-extrusion',
+    'source': 'counties',
+    'layout': {
+      'visibility': 'none'
+    },
+    'paint': {
+      'fill-extrusion-color': {
+        'property': 'popsqmi',
+        'stops': [
+          [1, 'white'],
+          [25, 'orange'],
+          [1000, 'firebrick']
+        ]
+      },
+      'fill-extrusion-height': {
+        "property": 'popsqmi',
+        "stops": [
+          [1, 0],
+          [25, 1000],
+          [1000, 65535]
+        ]
+      },
+      'fill-extrusion-opacity': 0.9,
+      'fill-extrusion-base': 0
+    }
+  }); // this would be different for mapbox styles
+
+  var ex = document.getElementById('extrude');
+  ex.addEventListener('click', function() {
+    if ( (map.getLayoutProperty('president', 'visibility')) === 'visible') {
+      map.setLayoutProperty('popsqmi', 'visibility', 'visible');
+      ex.className = 'active';
+      setTimeout(function() {
+        map.flyTo(view2);
+        map.setLayoutProperty('president', 'visibility', 'none');
+      }, 2000);
+    }else{
+      map.setLayoutProperty('president', 'visibility', 'visible');
+      map.setLayoutProperty('popsqmi', 'visibility', 'none');
+      ex.className = '';
+      map.flyTo(view1);
+    }
+  });
+
+});
+
+
+  </script>
+  
+  
   </div>
 </div>
 

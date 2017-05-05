@@ -1,15 +1,16 @@
 ---
-title: Intro to Leaflet
+title: Mapbox GL JS Examples
 subtitle: Outline
-index: true
-permalink: /leaflet/index.html
+map: false
+permalink: /mapbox/index.html
 ---
+
 <ul class="post-list">
-  {% for step in site.leaflet offset:1%}
+  {% for step in site.mapbox offset:1%}
     <li class="content">
-      <h2>
+      <h3>
         <a class="post-link" href="{{ step.url | prepend: site.baseurl | remove:'index.html' }}">{{ step.subtitle }}</a>
-      </h2>
+      </h3>
     </li>
   {% endfor %}
 </ul>

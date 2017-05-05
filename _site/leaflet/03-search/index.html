@@ -8,13 +8,13 @@
   <title>Intro to Leaflet</title>
   <meta property="og:title" content="Intro to Leaflet" />
   <meta property="og:type" content="blog" />
-  <meta property="og:url" content="/gis-tutorials/leaflet/index.html" />
+  <meta property="og:url" content="/gis-tutorials/leaflet/03-search/" />
   <meta property="og:site_name" content="OVRDC GIS Tutorials" />
   <meta property="og:image" content="/gis-tutorials/img/site-img.png" />
   <meta property="og:image:width" content="1193" />
   <meta property="og:image:height" content="848" />
-  <meta property="og:description" content="This is a basic introduction to the Leaflet JavaScript API. The Leaflet homepage also has great tutorials, and there are many more out on the web. This site ...">
-  <link rel="canonical" href="http://localhost:4000/gis-tutorials/leaflet/">
+  <meta property="og:description" content="var map = L.map("map");map.setView([40.3,-96.6], 5);L.hash(map);L.control.scale().addTo(map);var layerControl = new L.control.layers(null, null).addTo(map);/...">
+  <link rel="canonical" href="http://localhost:4000/gis-tutorials/leaflet/03-search/">
   
     <!-- Leaflet -->
   <link rel="stylesheet" href="/gis-tutorials/leaflet/plugins/leaflet/leaflet.css" />
@@ -101,7 +101,7 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
         <div class="column">
           <span class="title is-3"><a href="/gis-tutorials/leaflet">Intro to Leaflet</a></span>
           <span class="title is-3 has-text-muted">&nbsp;|&nbsp;</span>
-          <span class="title is-4 has-text-muted">Outline</span>
+          <span class="title is-4 has-text-muted">Searching Layers via Leaflet Search</span>
         </div>
       </div>
     </div>
@@ -111,64 +111,122 @@ a,hr{padding:0}a,button,input[type=button],input[type=file],input[type=submit],l
     <div class="columns">
       <div class="column is-12">
         
+        <div class="content">
+          One of the benefits of Leaflet is the vast amount of free plugins avaible. In this map we are using the Leaflet Search plugin. It provides either a global address search or a feature search. Here we are searching the County layer on the 'NAME' field. However, since we are searching data that must be loaded into the browser, we have to wait until the data is loaded before we can call the search function. The omnivore plugin solves this for us since it has a built in event that is fired once the data is loaded. If you are using jQuery to load the data, you can use the <code>.done()</code> method.
+        </div>
         
-        <p>This is a basic introduction to the <a href="http://leafletjs.com">Leaflet JavaScript API</a>. The Leaflet homepage also has great <a href="http://leafletjs.com/examples.html">tutorials</a>, and there are many more out on the web. This site and these first set of tutorials was originally created for a workshop at the 2017 <a href="https://www.ohurisa.org">Ohio URISA</a> GIS Education Series.</p>
-
-<ul class="post-list">
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/01-basic-map/">Basic Leaflet Map</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/01.5-basemaps/">Adding Basemaps (Tile Layers)</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/02-omnivore/">Adding Data via Omnivore</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/03-search/">Searching Layers via Leaflet Search</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/04-styles-interaction/">Styling and Interaction</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/05-points/">Adding and Styling Points</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/06-turf-within/">GIS Analysis: Turf Within</a>
-      </h3>
-    </li>
-  
-    <li class="content">
-      <h3>
-        <a class="post-link" href="/gis-tutorials/leaflet/07-choropleth/">Leaflet Choropleth</a>
-      </h3>
-    </li>
-  
-</ul>
-
+        <div id="map">
+        </div>
+        <div>
+          
         </div>
       </div>
      </div>
+     <div>
+       
+         <a class="is-pulled-left button is-success is-outlined" href="/gis-tutorials/leaflet/02-omnivore/">&laquo; Adding Data via Omnivore</a>
+       
+       
+         <a class="is-pulled-right button is-success is-outlined" href="/gis-tutorials/leaflet/04-styles-interaction/">Styling and Interaction &raquo;</a>
+       
+     </div>
+  </div>
+</div>
+<div class="section">
+  <div class="container content">
+    
+    <h4>Full Map Code</h4>
+    <div id="code" class="">
+    <pre style="background-color: #eee;">
+      <code class="javascript">
+var map = L.map("map");
+
+map.setView([40.3,-96.6], 5);
+
+L.hash(map);
+
+L.control.scale().addTo(map);
+
+var layerControl = new L.control.layers(null, null).addTo(map);
+
+/*Easily add basemaps or baselayers with L.tileLayer wms layers can also be added with L.tileLayer.wms */
+
+var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+}).addTo(map);
+
+layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
+
+var url = "/gis-tutorials/tutorial-data/counties.topojson";
+
+var counties = L.geoJson().addTo(map);
+
+/*can put html inside here, this is one way you could add a legend*/
+layerControl.addOverlay(counties, "Counties");
+
+var cData = omnivore.topojson(url, null, counties);
+
+// Search
+
+cData.on("ready", function() {
+
+	var searchControl = new L.Control.Search({
+		layer: counties,
+		propertyName: 'NAME',
+	}).addTo(map);
+
+});
+
+
+      </code>
+    </pre>
+  </div>
+  
+  <script>
+  var map = L.map("map");
+
+map.setView([40.3,-96.6], 5);
+
+L.hash(map);
+
+L.control.scale().addTo(map);
+
+var layerControl = new L.control.layers(null, null).addTo(map);
+
+/*Easily add basemaps or baselayers with L.tileLayer wms layers can also be added with L.tileLayer.wms */
+
+var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+}).addTo(map);
+
+layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
+
+var url = "/gis-tutorials/tutorial-data/counties.topojson";
+
+var counties = L.geoJson().addTo(map);
+
+/*can put html inside here, this is one way you could add a legend*/
+layerControl.addOverlay(counties, "Counties");
+
+var cData = omnivore.topojson(url, null, counties);
+
+// Search
+
+cData.on("ready", function() {
+
+	var searchControl = new L.Control.Search({
+		layer: counties,
+		propertyName: 'NAME',
+	}).addTo(map);
+
+});
+
+
+  </script>
+  
+  
   </div>
 </div>
 

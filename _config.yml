@@ -5,22 +5,37 @@ description: "This site contains a series of web map tutorials and examples."
 twitter_username: getbounds
 github_username:  ovrdc
 
+#source files
+source: ./_dev
+layouts_dir:  _jekyll/_layouts
+includes_dir: _jekyll/_includes
+include: ["_pages"]
+
 # Build settings
 baseurl: /gis-tutorials
 url: https://ovrdc.github.io
 exclude: ["programs", "dev", "FirefoxPortable.exe","GeanyPortable.exe", "*.mxd"]
 markdown: kramdown
 highlighter: rouge
-permalink: /:title/index.html
+permalink: /:title/
+sass:
+    style: compressed
 
 collections:
   leaflet:
     output: true
     about: >-
-      A basic introduction to the Leaflet Web Mapping API. The examples cover adding data, styling and basic interaction. We also cover creating a choropleth map and doing basic GIS analysis in the browser with Turf.
+      A basic introduction to the Leaflet Web Mapping API. The examples cover adding data, styling and basic interaction. We also cover creating a choropleth map and doing basic GIS analysis in the browser with TurfJS.
     authors:
       - OVRDC | Malcolm Meyer
-      - Prime 3sg | 
+      - Prime 3sg |
+
+  mapbox:
+    output: true
+    about: >-
+      An introduction to the Mapbox GL JS API. The examples cover data adding data, data-driven styling, polygon extrusion and more. This set of tutorials was created for a workshop submission to the 2017 <a href="http://ogrip.oit.ohio.gov/Events/OhioGISConference.aspx" target="_blank">Ohio GIS Conference</a>.
+    authors:
+      - OVRDC | Malcolm Meyer
 
 defaults:
   - scope:
@@ -28,3 +43,8 @@ defaults:
       type: leaflet
     values:
       layout: leaflet
+  - scope:
+      path: ""
+      type: mapbox
+    values:
+      layout: mapbox

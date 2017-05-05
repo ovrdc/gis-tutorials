@@ -1,14 +1,13 @@
----
-layout: main
----
 <div class="section">
   <div class="container">
     <div class="columns">
       <div class="column is-12">
+        {% if page.description %}
         <div class="content">
           {{page.description}}
         </div>
-        {% if page.index != true %}<div id="map">
+        {% endif %}
+        {% if page.map != false %}<div id="map">
         </div>
         <div>
           {% if page.note %}{{page.note}}{%endif%}
@@ -27,7 +26,7 @@ layout: main
 </div>
 <div class="section">
   <div class="container content">
-    {% if page.index != true %}
+    {% if page.map != false %}
     <h4>Full Map Code</h4>
     <div id="code" class="">
     <pre style="background-color: #eee;">

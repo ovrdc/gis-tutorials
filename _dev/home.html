@@ -3,6 +3,7 @@ layout: main
 home: true
 title: OVRDC GIS Tutorials
 subtitle: Web Mapping, Desktop GIS & More...
+permalink: /index.html
 ---
 <div class="section">
   <div class="container">
@@ -18,7 +19,7 @@ subtitle: Web Mapping, Desktop GIS & More...
               <p>
                 {{tutorial.about}}
               </p>
-              <p>
+              <p class="subtitle is-5">
                 {% for author in tutorial.authors %}
                 {{author}}<br />
                 {% endfor %}
