@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Leaflet Map Intro</title>
-	<meta charset="utf-8" />
+  <title>Leaflet Map Intro</title>
+  <meta charset="utf-8" />
   <!--setting viewport is important for proper mobile scaling-->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Leaflet -->
-	<link rel="stylesheet" href="plugins/leaflet/leaflet.css" />
-	<script src="plugins/leaflet/leaflet.js"></script>
-	<script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
-	<!-- Omnivore -->
-	<script src="plugins/omnivore/leaflet-omnivore.min.js"></script>
-	<!-- Search -->
-	<link rel="stylesheet" href="plugins/search/leaflet-search.min.css" />
-	<script src="plugins/search/leaflet-search.min.js"></script>
-	<!--Choropleth -->
-	<script src="plugins/choropleth/choropleth.js"></script>
-	<!--Turf -->
-	<script src="plugins/turf/turf.min.js"></script>
-	<style>
-		body,html{
-			height:100%;
-			width:100%;
-			margin:0;
-		}
-		#map{
-			width:100%;
-			height:100%;
-			background:whitesmoke;
-		}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="plugins/leaflet/leaflet.css" />
+  <script src="plugins/leaflet/leaflet.js"></script>
+  <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js"></script>
+  <!-- Omnivore -->
+  <script src="plugins/omnivore/leaflet-omnivore.min.js"></script>
+  <!-- Search -->
+  <link rel="stylesheet" href="plugins/search/leaflet-search.min.css" />
+  <script src="plugins/search/leaflet-search.min.js"></script>
+  <!--Choropleth -->
+  <script src="plugins/choropleth/choropleth.js"></script>
+  <!--Turf -->
+  <script src="plugins/turf/turf.min.js"></script>
+  <style>
+    body,
+    html {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      background: whitesmoke;
+    }
+
     #coord {
       position: absolute;
       bottom: 0;
-      left:0;
+      left: 0;
       background: white;
       color: #0078A8;
       font-size: 11px;
     }
   </style>
 </head>
+
 <body>
-<div id="map">
-<div id="coord"></div>
-</div>
-<script>
-var map = new L.map('map');
-map.setView([39,-82], 10);
-var coord = document.getElementById("coord");
-map.on('mousemove', function(e) {
-  coord.innerHTML = e.latlng.lat + ', ' + e.latlng.lng;
-});
-</script>
+  <div id="map">
+    <div id="coord"></div>
+  </div>
+  <script>
+    var map = new L.map('map');
+    map.setView([39, -82], 10);
+    var coord = document.getElementById("coord");
+    map.on('mousemove', function(e) {
+      coord.innerHTML = e.latlng.lat + ', ' + e.latlng.lng;
+    });
+  </script>
 </body>
+
 </html>
