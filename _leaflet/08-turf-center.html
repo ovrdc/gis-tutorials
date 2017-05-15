@@ -1,6 +1,7 @@
 ---
 title: Intro to Leaflet
 subtitle: "GIS Analysis: Turf Center"
+description: This is an example of the <code>turf.centerOfMass()</code> function, which is being called on every county in the country. The resulting points are added to the map as individual <code>L.circleMarker()</code> features, added to an <code>L.geoJSON()</code> feature. The radius is the winning vote percentage of the 2016 presidential race times the county population (divided by a 60,000 to make them legible on the map). This example also highlights the vastly different maps that can be made from the same dataset. 
 ---
 {% include leaflet/basic.js %}
 {% include leaflet/basemaps.js %}
