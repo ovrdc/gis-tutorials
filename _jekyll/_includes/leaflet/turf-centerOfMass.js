@@ -21,7 +21,7 @@ var counties = L.geoJson(null, {
   },
   onEachFeature: function(feature, county) {
     var info = county.feature.properties.NAME +
-      "<br>" + county.feature.properties.winner;
+      "<" + "br" + ">" + county.feature.properties.winner;
     county.bindPopup(info);
   }
 }).addTo(map);
