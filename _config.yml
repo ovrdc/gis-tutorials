@@ -27,7 +27,7 @@ collections:
       A basic introduction to the Leaflet Web Mapping API. The examples cover adding data, styling and basic interaction. We also cover creating a choropleth map and doing basic GIS analysis in the browser with TurfJS.
     authors:
       - OVRDC | Malcolm Meyer
-      - Prime 3sg |
+      - Prime 3sg | Jon Woyame & Jesse Glascock
 
   mapbox:
     output: true
