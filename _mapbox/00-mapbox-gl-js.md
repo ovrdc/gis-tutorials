@@ -1,6 +1,8 @@
 ---
 title: Mapbox GL JS Examples
 subtitle: Outline
+description: >-
+  This is a brief set of tutorials on Mapbox GL JS. More information can be found on the <a href="https://www.mapbox.com/mapbox-gl-js/api/" target-"_blank">Mapbox website.</a>
 map: false
 permalink: /mapbox/index.html
 ---
