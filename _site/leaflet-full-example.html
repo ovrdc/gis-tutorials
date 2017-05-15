@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Leaflet Map Intro</title>
 	<meta charset="utf-8" />
@@ -18,122 +19,186 @@
 	<!--Turf -->
 	<script src="_leaflet/plugins/turf/turf.min.js"></script>
 	<style>
-		body,html{
-			height:100%;
-			width:100%;
-			margin:0;
+		body,
+		html {
+			height: 100%;
+			width: 100%;
+			margin: 0;
 		}
-		#map{
-			width:100%;
-			height:100%;
-			background:whitesmoke;
+
+		#map {
+			width: 100%;
+			height: 100%;
+			background: whitesmoke;
 		}
-  </style>
+	</style>
 </head>
+
 <body>
-<div id="map"></div>
-<script>
-var map = L.map("map");
+	<div id="map"></div>
+	<script>
+		var map = L.map("map");
 
-map.setView([40.3,-96.6], 5);
+		map.setView([40.3, -96.6], 5);
 
-L.hash(map);
+		L.hash(map);
 
-L.control.scale().addTo(map);
+		L.control.scale().addTo(map);
 
-var layerControl = L.control.layers().addTo(map);
+		var layerControl = L.control.layers().addTo(map);
 
-var url = "tutorial-data/counties.topojson";
+		/*Easily add basemaps or baselayers with L.tileLayer
+		WMS layers can also be added with L.tileLayer.wms */
 
-var counties = L.geoJson(null, {
-    style: function(feature) {
-	switch(feature.properties.winner) {
-	    case "Trump": return {fillColor: "red"}
-	    default	: return {fillColor: "blue"}
-	}
-    },
-    onEachFeature: function(feature, county) {
-	var info = county.feature.properties.NAME +
-        "<br>" + county.feature.properties.winner;
-    county.bindPopup(info);
-    }
-});
+		var tileUrl = 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+		var attribution = '© OpenStreetMap, Tiles courtesy of Humanitarian OpenStreetMap Team';
 
-layerControl.addOverlay(counties, "Counties");
+		var OpenStreetMap_HOT = L.tileLayer(tileUrl, {
+			maxZoom: 19,
+			attribution: attribution,
+			opacity: 0.8
+		}).addTo(map);
 
-var cData = omnivore.topojson(url, null, counties);
+		layerControl.addBaseLayer(OpenStreetMap_HOT, "Streets");
 
-// Once our county data is loaded,
-// add search functionality using
-// leaflet-search with default settings
+		var url = "tutorial-data/counties.topojson";
 
-var choropleth;
+		var counties = L.geoJson(null, {
+			style: function(feature) {
+				switch (feature.properties.winner) {
+					case "Trump":
+						return {
+							fillColor: "red",
+							fillOpacity: 0.4,
+							color: 'white',
+							weight: 1
+						}
+					default:
+						return {
+							fillColor: "blue",
+							fillOpacity: 0.4,
+							color: 'white',
+							weight: 1
+						}
+				}
+			},
+			onEachFeature: function(feature, county) {
+				var info = county.feature.properties.NAME +
+					"<br>" + county.feature.properties.winner;
+				county.bindPopup(info);
+			}
+		}).addTo(map);
 
-// Choropleth
+		layerControl.addOverlay(counties, "Counties");
 
-cData.on("ready", function() {
-	map.removeLayer(counties);
-	choropleth = L.choropleth(cData.toGeoJSON(), {
-		valueProperty: "POP_SQMI", // which property in the features to use
-		scale: ["white","#006d2c"], // chroma.js scale - include as many as you like
-		steps: 7, // number of breaks or steps in range
-		mode: "q", // q for quantile, e for equidistant, k for k-means
-		style: {
-			color: "#fff", // border color
-			weight: 1,
-			fillOpacity: 0.9
-		},
-		onEachFeature: function(feature, layer) {
-			layer.bindTooltip(feature.properties.NAME + "<br>" + feature.properties.POPULATION)
+		var cData = omnivore.topojson(url, null, counties);
+
+		// Once our county data is loaded,
+		// add search functionality using
+		// leaflet-search with default settings
+
+		var choropleth;
+
+		// Choropleth
+
+		cData.on("ready", function() {
+			//map.removeLayer(counties);
+			choropleth = L.choropleth(cData.toGeoJSON(), {
+				valueProperty: "POP_SQMI", // which property in the features to use
+				scale: ["white", "#006d2c"], // chroma.js scale - include as many as you like
+				steps: 7, // number of breaks or steps in range
+				mode: "q", // q for quantile, e for equidistant, k for k-means
+				style: {
+					color: "#fff", // border color
+					weight: 1,
+					fillOpacity: 0.9
+				},
+				onEachFeature: function(feature, layer) {
+					layer.bindTooltip(feature.properties.NAME + "<br>" + feature.properties.POPULATION)
+				}
+			});
+			layerControl.addOverlay(choropleth, "Choropleth");
+		});
+
+		var url2 = "tutorial-data/airports.geojson"
+
+		var aStyle = {
+			color: "black",
+			radius: 5,
+			weight: 0,
+			fillOpacity: 1,
+			pane: "markerPane"
+		};
+
+		var airports = L.geoJson(null, {
+			pointToLayer: function(feature, latlng) {
+				return L.circleMarker(latlng, aStyle)
+			}
+		});
+
+		var aData = omnivore.geojson(url2, null, airports);
+
+		var airportJson;
+
+		aData.on('ready', function() {
+			aData.toGeoJSON();
+			airportJson = aData.toGeoJSON();
+		});
+
+		var highlightStyle = {
+			color: "goldenrod",
+			fillColor: "goldenrod",
+			opacity: 1,
+			fillOpacity: 1,
+			pane: "markerPane"
 		}
-	}).addTo(map);
-	layerControl.addOverlay(choropleth, "Choropleth");
-});
 
-var url2= "tutorial-data/airports.geojson"
+		var highlight = new L.geoJson(null, {
+			pointToLayer: function(feature, latlng) {
+				return new L.circleMarker(latlng, highlightStyle)
+			}
+		}).addTo(map);
 
-var aStyle= {
-    color: "black",
-    radius: 5,
-    weight: 0,
-    fillOpacity: 1,
-    pane: "markerPane" };
+		counties.on("mouseover", function(e) {
+			highlight.clearLayers();
+			var selLayer = new L.geoJson(e.layer.toGeoJSON());
+			var within = turf.within(airportJson, selLayer.toGeoJSON());
+			highlight.addData(within);
+		});
 
-var airports = L.geoJson(null, {
-    pointToLayer: function(feature, latlng) {
-	return L.circleMarker(latlng, aStyle)
-    }
-}).addTo(map);
-
-var aData= omnivore.geojson(url2, null, airports);
-
-var airportJson;
-
-aData.on('ready', function() {
-    aData.toGeoJSON();
-    airportJson = aData.toGeoJSON();
-});
-
-var highlightStyle = {
-    color: "goldenrod",
-    fillColor: "goldenrod",
-    opacity: 1,
-    fillOpacity: 1,
-    pane: "markerPane"
-}
-
-var highlight = new L.geoJson(null, {
-    pointToLayer: function(feature, latlng) {
-	return new L.circleMarker(latlng, highlightStyle)
-    }
-}).addTo(map);
-
-counties.on("mouseover", function(e) {
-    highlight.clearLayers();
-    var selLayer = new L.geoJson(e.layer.toGeoJSON());
-    var within = turf.within(airportJson, selLayer.toGeoJSON());
-    highlight.addData(within);
-});
-</script>
+		/*var countyPoints = L.geoJson(null, {
+			pane: 'makerPane'
+		}).addTo(map);
+		layerControl.addOverlay(countyPoints, "Winner Percentage * Population")
+		var x = 0;
+		var r = 1;
+		var v = 1;
+		var c = 'gray';
+		var o = 0.7;
+		cData.on('ready', function(data) {
+			counties.eachLayer(function(layer) {
+				var center = turf.centerOfMass(layer.toGeoJSON());
+				if (x == 0) {console.log(center);}
+				x = 1;
+				if (layer.feature.properties.winner == 'Trump') {
+					v = ((layer.feature.properties.POPULATION) * (layer.feature.properties["per_gop"]));
+					r = v/60000;
+					c = 'red';
+					o = layer.feature.properties["per_gop"]
+				}
+				if (layer.feature.properties.winner == 'Hillary') {
+					v = ((layer.feature.properties.POPULATION) * (layer.feature.properties["per_dem"]));
+					r = v/60000;
+					c = 'blue';
+					o = layer.feature.properties["per_dem"]
+				}
+				if (r < 1 ) {r = 1}
+				var marker = L.circleMarker([center.geometry.coordinates[1],center.geometry.coordinates[0]], {radius: r, opacity: o, fillOpacity: o, color: c, fillColor: c});
+				marker.bindPopup('County Population * Percent of Winner Vote: ' + v.toFixed(0));
+				countyPoints.addLayer(marker);
+			})
+		});*/
+	</script>
 </body>
+
 </html>
