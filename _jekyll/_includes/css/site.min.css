@@ -1,5 +1,5 @@
 .fa,.has-text-muted{color:#95A5A6}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}.fa{font-size:10px;padding-top:3px}.panel-block-item{display:inline-block;color:#95A5A6;font-weight:700;padding:0 10px}.cart-icon{padding-top:10px}.product-header{background-color:#fafafa;padding:24px 10px}#map{position:relative;height:600px;width:100%;background-color:#eee}.hljs{background:#eee;}
-.section .content, .section p {font-size:16px;}.post-list{padding-top:2rem;}
+.section .content, .section p {font-size:16px;}.post-list{padding-top:2rem;}.nav {position: fixed;width: 100%;z-index: 9999;}
 @media screen and (max-width:1000px) {
   .nav-item h3{
     margin-left:10px;
