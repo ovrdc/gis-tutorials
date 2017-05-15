@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Mapbox GL Example</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      background: whitesmoke;
+    }
+
+    #extrude {
+      position: absolute;
+      top: 110px;
+      right: 10px;
+      z-index: 9999;
+      border-radius: 2px;
+      background: white;
+      width: 30px;
+      padding: 7px 0;
+      text-align: center;
+      display: block;
+      font-size: larger;
+      cursor: pointer;
+    }
+    .active {
+      font-weight: bold;
+      color: orange;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id='map'>
+    <div id="extrude">
+      3D
+    </div>
+  </div>
+  <script>
+    //6/39.212/-81.651/-23.2/60
+    var view2 = {center: [-80.6,39.1], zoom: 5, bearing: -18.1, pitch: 60, speed: 0.2, curve: 0.7};
+    var view1 = {center: [-95.52, 39.94], zoom: 4, bearing: 0, pitch: 0, speed: 0.5, curve: 0.5};
+    var map = new mapboxgl.Map({
+      container: 'map',
+      hash: true,
+      //style: 'https://www.ovrdc.org/apps/assets/mapboxgl/openmaptiles/osm-bright/style.json',
+      style: 'tutorial-data/blank.json',
+      center: [-95.52, 39.94],
+      zoom: 4,
+      debug: 1
+    });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+    map.on('style.load', function() {
+      map.flyTo(view1);
+      map.addSource('counties', {
+        'type': 'geojson',
+        'data': 'tutorial-data/counties.geojson'
+      });
+      map.addLayer({
+        'id': 'president',
+        'type': 'fill',
+        'source': 'counties',
+        'layout': {
+          'visibility': 'visible'
+        },
+        'paint': {
+          'fill-color': {
+            'property': 'popsqmi',
+            'stops': [
+              [1, 'white'],
+              [25, 'orange'],
+              [1000, 'firebrick']
+            ]
+          },
+          'fill-outline-color': 'white',
+          'fill-opacity': 0.9
+        }
+      });
+
+      // this would be different for mapbox styles
+      map.addLayer({
+        'id': 'popsqmi',
+        'type': 'fill-extrusion',
+        'source': 'counties',
+        'layout': {
+          'visibility': 'none'
+        },
+        'paint': {
+          'fill-extrusion-color': {
+            'property': 'popsqmi',
+            'stops': [
+              [1, 'white'],
+              [25, 'orange'],
+              [1000, 'firebrick']
+            ]
+          },
+          'fill-extrusion-height': {
+            "property": 'popsqmi',
+            "stops": [
+              [1, 0],
+              [25, 1000],
+              [1000, 65535]
+            ]
+          },
+          'fill-extrusion-opacity': 0.9,
+          'fill-extrusion-base': 0
+        }
+      }); // this would be different for mapbox styles
+
+      var ex = document.getElementById('extrude');
+      ex.addEventListener('click', function() {
+        if ( (map.getLayoutProperty('president', 'visibility')) === 'visible') {
+          map.setLayoutProperty('popsqmi', 'visibility', 'visible');
+          ex.className = 'active';
+          setTimeout(function() {
+            map.flyTo(view2);
+            map.setLayoutProperty('president', 'visibility', 'none');
+          }, 2000);
+        }else{
+          map.setLayoutProperty('president', 'visibility', 'visible');
+          map.setLayoutProperty('popsqmi', 'visibility', 'none');
+          ex.className = '';
+          map.flyTo(view1);
+        }
+      });
+
+    });
+    var x = 0;
+    var y = 0;
+    var v2;
+
+    map.on('data', function() {
+      x = x + 1;
+    });
+    
+    function logData() {
+      console.log(x);
+      y = y+1;
+      v2 = setTimeout(checkData, 1000);
+    };
+    
+    var myVar = setInterval(logData, 10);
+    
+    function checkData() {
+      if (y > x) {
+        console.log(true);
+        clearInterval(myVar);
+        clearInterval(v2);
+      }
+    }                            
+      
+
+  </script>
+</body>
+
+</html>

@@ -17,6 +17,7 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new mapboxgl.FullscreenControl());
 
 map.on('style.load', function() {
   map.flyTo(view1);
