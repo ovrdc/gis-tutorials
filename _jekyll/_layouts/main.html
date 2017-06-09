@@ -6,21 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta property="og:title" content="{{ page.title }}" />
+  <meta property="og:title" content="{{ page.title }} | {{page.subtitle}}" />
   <meta property="og:type" content="blog" />
+  <meta property="article:author" content="{{site.author}}" />
   <meta property="og:url" content="{{ site.baseurl }}{{ page.url }}" />
   <meta property="og:site_name" content="{{ site.title }}" />
-  <meta property="og:image" content="{{ site.baseurl }}/img/site-img.png" />
-  <meta property="og:image:width" content="1193" />
-  <meta property="og:image:height" content="848" />
-  <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:image" content="{{ site.baseurl }}/{% if page.img %}{{page.layout}}/img/{{page.img}}{%else%}{{site.img}}{%endif%}" />
+  <meta property="og:image:width" content="{% if page.img-height %}{{page.img-height}}{% else %}1068{% endif %}" />
+  <meta property="og:image:height" content="{% if page.img-width %}{{page.img-width}}{% else %}598{% endif %}" />
+  <meta property="og:description" content="{% if page.description %}{{ page.description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   {% if page.layout == "leaflet" %}
   {% include leaflet/_leaflet-plugins.html %}
   {% endif %}
   {% if page.layout == "mapbox" %}
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet' />
   {% endif %}
   {% if page.layout == "leaflet" or page.layout == "mapbox" %}
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">

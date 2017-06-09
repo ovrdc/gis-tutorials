@@ -1,6 +1,9 @@
+/*Choropleth and Extrusion Example*/
+
 var mapdiv = document.getElementById('map');
-var button = document.createElement("div", "extrude");
+var button = document.createElement("div");
 button.setAttribute("id", "extrude");
+button.setAttribute("class", "mapboxgl-ctrl-group");
 button.innerHTML = "3D";
 mapdiv.appendChild(button);
 
@@ -48,7 +51,7 @@ map.on('style.load', function() {
     }
   });
 
-  // this would be different for mapbox styles
+  /* this would be different for mapbox styles*/
   map.addLayer({
     'id': 'popsqmi',
     'type': 'fill-extrusion',
@@ -76,13 +79,13 @@ map.on('style.load', function() {
       'fill-extrusion-opacity': 0.9,
       'fill-extrusion-base': 0
     }
-  }); // this would be different for mapbox styles
+  }); /* this would be different for mapbox styles*/
 
   var ex = document.getElementById('extrude');
   ex.addEventListener('click', function() {
     if ((map.getLayoutProperty('countiesLayer', 'visibility')) === 'visible') {
       map.setLayoutProperty('popsqmi', 'visibility', 'visible');
-      ex.className = 'active';
+      ex.className = 'mapboxgl-ctrl-group active';
       setTimeout(function() {
         map.flyTo(view2);
         map.setLayoutProperty('countiesLayer', 'visibility', 'none');
@@ -90,9 +93,11 @@ map.on('style.load', function() {
     } else {
       map.setLayoutProperty('countiesLayer', 'visibility', 'visible');
       map.setLayoutProperty('popsqmi', 'visibility', 'none');
-      ex.className = '';
+      ex.className = 'mapboxgl-ctrl-group';
       map.flyTo(view1);
     }
   });
 
 });
+
+/*End Choropleth Example*/

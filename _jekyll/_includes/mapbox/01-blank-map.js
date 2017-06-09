@@ -1,3 +1,5 @@
+/*Blank Mapbox GL Map*/
+
 var map = new mapboxgl.Map({
   container: 'map',
   hash: true,
@@ -26,3 +28,5 @@ var map = new mapboxgl.Map({
 });
 map.addControl(new mapboxgl.NavigationControl());
 map.addControl(new mapboxgl.FullscreenControl()); /*not working correctly with this layout */
+
+/*End Blank Map*/
