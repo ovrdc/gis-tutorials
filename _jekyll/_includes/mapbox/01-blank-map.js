@@ -27,6 +27,6 @@ var map = new mapboxgl.Map({
   debug: 1
 });
 map.addControl(new mapboxgl.NavigationControl());
-map.addControl(new mapboxgl.FullscreenControl()); /*not working correctly with this layout */
+map.addControl(new mapboxgl.FullscreenControl());
 
 /*End Blank Map*/

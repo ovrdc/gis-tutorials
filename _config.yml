@@ -33,7 +33,7 @@ collections:
   mapbox:
     output: true
     about: >-
-      An introduction to the Mapbox GL JS API. The examples cover data adding data, data-driven styling, polygon extrusion and more. This set of tutorials was created for a workshop at the 2017 <a href="http://ogrip.oit.ohio.gov/Events/OhioGISConference.aspx" target="_blank">Ohio GIS Conference</a>. More roboust examples can be found on the <a href="https://www.mapbox.com/mapbox-gl-js/examples/" target="_blank">Mapbox</a> website.
+      An introduction to the Mapbox GL JS API. The examples cover data adding data, data-driven styling, polygon extrusion and more. This set of tutorials was created for a presentation at the 2017 <a href="http://ogrip.oit.ohio.gov/Events/OhioGISConference.aspx" target="_blank">Ohio GIS Conference</a>. More roboust examples can be found on the <a href="https://www.mapbox.com/mapbox-gl-js/examples/" target="_blank">Mapbox</a> website.
     authors:
       - OVRDC | Malcolm Meyer
 

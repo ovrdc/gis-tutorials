@@ -52,6 +52,7 @@ map.on('style.load', function() {
   });
 
   /* this would be different for mapbox styles*/
+
   map.addLayer({
     'id': 'popsqmi',
     'type': 'fill-extrusion',

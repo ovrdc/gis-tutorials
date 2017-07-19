@@ -1,4 +1,4 @@
-/*Popup and tooltip example*/
+/*Query with Popup and tooltip example*/
 
 var popup = new mapboxgl.Popup({
   closeButton: false,
@@ -7,12 +7,12 @@ var popup = new mapboxgl.Popup({
 
 function identifyFeatures(location, layer, fields) {
   var identifiedFeatures = map.queryRenderedFeatures(location.point, layer);
-  console.log(identifiedFeatures);
+  /*console.log(identifiedFeatures);*/
   popup.remove();
   if (identifiedFeatures != '') {
     var popupText = "";
     for (i = 0; i < fields.length; i++) {
-      popupText += "<strong>" + fields[i] + ":</strong> " + identifiedFeatures[0].properties[fields[i]] + "<br>"
+      popupText += "<strong>" + fields[i] + ":</strong> " + identifiedFeatures[0].properties[fields[i]] + "<" + "br" + ">"
     };
     popup.setLngLat(location.lngLat)
       .setHTML(popupText)
