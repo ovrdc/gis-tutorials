@@ -4,3 +4,138 @@ subtitle: Choropleth from Joined Data
 description: >-
   This example is based on the Mapbox example, but adds color scales from chroma.js.
 ---
+{% include mapbox/01-blank-map.js %}
+
+// Join local JSON data with vector tile geometry
+// USA unemplyoment rate in 2009
+// Source https://data.bls.gov/timeseries/LNS14000000
+var maxValue = 13.17;
+var data = [
+    {"s": "01", "u": 13.17},
+    {"s": "02", "u": 9.5},
+    {"s": "04", "u": 12.15},
+    {"s": "05", "u": 8.99},
+    {"s": "06", "u": 11.83},
+    {"s": "08", "u": 7.52},
+    {"s": "09", "u": 6.44},
+    {"s": "10", "u": 5.17},
+    {"s": "12", "u": 9.67},
+    {"s": "13", "u": 10.64},
+    {"s": "15", "u": 12.38},
+    {"s": "16", "u": 10.13},
+    {"s": "17", "u": 9.58},
+    {"s": "18", "u": 10.63},
+    {"s": "19", "u": 8.09},
+    {"s": "20", "u": 5.93},
+    {"s": "21", "u": 9.86},
+    {"s": "22", "u": 9.81},
+    {"s": "23", "u": 7.82},
+    {"s": "24", "u": 8.35},
+    {"s": "25", "u": 9.1},
+    {"s": "26", "u": 10.69},
+    {"s": "27", "u": 11.53},
+    {"s": "28", "u": 9.29},
+    {"s": "29", "u": 9.94},
+    {"s": "30", "u": 9.29},
+    {"s": "31", "u": 5.45},
+    {"s": "32", "u": 4.21},
+    {"s": "33", "u": 4.27},
+    {"s": "34", "u": 4.09},
+    {"s": "35", "u": 7.83},
+    {"s": "36", "u": 8.01},
+    {"s": "37", "u": 9.34},
+    {"s": "38", "u": 11.23},
+    {"s": "39", "u": 7.08},
+    {"s": "40", "u": 11.22},
+    {"s": "41", "u": 6.2},
+    {"s": "42", "u": 9.11},
+    {"s": "44", "u": 10.42},
+    {"s": "45", "u": 8.89},
+    {"s": "46", "u": 11.03},
+    {"s": "47", "u": 7.35},
+    {"s": "48", "u": 8.92},
+    {"s": "49", "u": 7.65},
+    {"s": "50", "u": 8.01},
+    {"s": "51", "u": 7.62},
+    {"s": "53", "u": 7.77},
+    {"s": "54", "u": 8.49},
+    {"s": "55", "u": 9.42},
+    {"s": "56", "u": 7.59}
+];
+
+// Get the vector geometries to join
+// US Census Data Source
+// https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html
+var mapId = "mapbox.us_census_states_2015";
+var layerName = "states";
+var vtMatchProp = "STATEFP";
+var dataMatchProp = "s";
+var dataStyleProp = "u";
+
+map.on('load', function() {
+
+    // Add source for state polygons hosted on Mapbox
+    map.addSource("states", {
+        type: "vector",
+        url: "mapbox://" + mapId
+    });
+
+    // First value is the default, used where the is no data
+    var stops = [];
+
+    // Calculate color for each state based on the unemployment rate
+	
+	var numbers = data.map(function(val) {
+		return val[dataStyleProp]
+	});
+	
+	var numbersIndex = data.map(function(val) {
+		var index = val.s + "|" + val[dataStyleProp];
+		return index
+	});
+	
+	console.log(numbers);
+	console.log(numbersIndex);
+	
+	var limits = chroma.limits(numbers, 'q', 5);
+	
+	var colorScale = chroma.scale(['#fafa6e','#2A4858'])
+    .mode('lch').colors(6);
+	
+	console.log(limits);
+	
+	console.log(colorScale);
+	
+	var newData = data.map(function(state) {
+	
+		var color = "#fafa6e";
+	
+		for (var i=0; i < limits.length; i++) {
+			if (state[dataStyleProp] <= limits[i]) {
+				color = colorScale[i];
+				break;
+				}
+			}
+
+		var id = state[dataMatchProp];
+		return [id, color]
+	});
+	
+	console.log(newData);
+
+    // Add layer from the vector tile source with data-driven style
+    map.addLayer({
+        "id": "states-join",
+        "type": "fill",
+        "source": "states",
+        "source-layer": layerName,
+        "paint": {
+            "fill-color": {
+                "property": vtMatchProp,
+                "type": "categorical",
+                "stops": newData
+            },
+			"fill-opacity": 0.7
+			}
+    }, 'waterway-label');
+});
