@@ -84,32 +84,32 @@ map.on('load', function() {
     var stops = [];
 
     // Calculate color for each state based on the unemployment rate
-	
+
 	var numbers = data.map(function(val) {
 		return val[dataStyleProp]
 	});
-	
+
 	var numbersIndex = data.map(function(val) {
 		var index = val.s + "|" + val[dataStyleProp];
 		return index
 	});
-	
+
 	console.log(numbers);
 	console.log(numbersIndex);
-	
+
 	var limits = chroma.limits(numbers, 'q', 5);
-	
+
 	var colorScale = chroma.scale(['#fafa6e','#2A4858'])
     .mode('lch').colors(6);
-	
+
 	console.log(limits);
-	
+
 	console.log(colorScale);
-	
+
 	var newData = data.map(function(state) {
-	
+
 		var color = "#fafa6e";
-	
+
 		for (var i=0; i < limits.length; i++) {
 			if (state[dataStyleProp] <= limits[i]) {
 				color = colorScale[i];
@@ -120,7 +120,7 @@ map.on('load', function() {
 		var id = state[dataMatchProp];
 		return [id, color]
 	});
-	
+
 	console.log(newData);
 
     // Add layer from the vector tile source with data-driven style
@@ -135,7 +135,8 @@ map.on('load', function() {
                 "type": "categorical",
                 "stops": newData
             },
-			"fill-opacity": 0.7
-			}
+            "fill-opacity": 0.7,
+            "fill-outline-color": "gray"
+          }
     });
 });
