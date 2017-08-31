@@ -4,13 +4,13 @@
       <div class="column is-12" style="height:600px;">
         {% if page.description %}
         <div class="content">
-          {{page.description}}
+          {{page.description | markdownify}}
         </div>
         {% endif %}
         {% if page.map != false %}<div id="map">
         </div>
         <div>
-          {% if page.note %}{{page.note}}{%endif%}
+          {% if page.note %}{{page.note | markdownify}}{%endif%}
         </div>
       </div>
      </div>
