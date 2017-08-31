@@ -77,7 +77,7 @@ map.on('load', function() {
     // Add source for state polygons hosted on Mapbox
     map.addSource("states", {
         type: "vector",
-        tiles: "https://tileserver.ovrdc.org/tigerusstates/{z}/{x}/{y}.pbf"
+        tiles: ["https://tileserver.ovrdc.org/tigerusstates/{z}/{x}/{y}.pbf"]
     });
 
     // First value is the default, used where the is no data
