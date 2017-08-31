@@ -2,7 +2,7 @@
 title: Mapbox GL JS
 subtitle: Choropleth from Joined Data
 description: >-
-  This example is based on the Mapbox example, but adds color scales from chroma.js.
+  This example is based on the [Mapbox example](https://www.mapbox.com/mapbox-gl-js/example/data-join/), but adds color scales from chroma.js.
 ---
 {% include mapbox/01-blank-map.js %}
 
@@ -68,7 +68,7 @@ var data = [
 // https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html
 var mapId = "mapbox.us_census_states_2015";
 var layerName = "states";
-var vtMatchProp = "STATEFP";
+var vtMatchProp = "GEOID";
 var dataMatchProp = "s";
 var dataStyleProp = "u";
 
