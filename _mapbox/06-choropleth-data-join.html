@@ -66,8 +66,7 @@ var data = [
 // Get the vector geometries to join
 // US Census Data Source
 // https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html
-var mapId = "mapbox.us_census_states_2015";
-var layerName = "states";
+var layerName = "statesus";
 var vtMatchProp = "GEOID";
 var dataMatchProp = "s";
 var dataStyleProp = "u";
@@ -77,7 +76,7 @@ map.on('load', function() {
     // Add source for state polygons hosted on Mapbox
     map.addSource("states", {
         type: "vector",
-        url: "mapbox://" + mapId
+        tiles: "https://tileserver.ovrdc.org/tigerusstates/{z}/{x}/{y}.pbf"
     });
 
     // First value is the default, used where the is no data
