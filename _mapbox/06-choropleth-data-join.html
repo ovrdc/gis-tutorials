@@ -74,7 +74,7 @@ var dataStyleProp = "u";
 
 map.on('load', function() {
 
-    // Add source for state polygons hosted on Mapbox
+    // Add source for state polygons hosted by OVRDC Node JS Tileserver
     map.addSource("states", {
         type: "vector",
         tiles: ["https://tileserver.ovrdc.org/tigerusstates/{z}/{x}/{y}.pbf"]
@@ -97,10 +97,11 @@ map.on('load', function() {
 	console.log(numbers);
 	console.log(numbersIndex);
 
+	//chroma quantile scale
 	var limits = chroma.limits(numbers, 'q', 5);
-
-	var colorScale = chroma.scale(['#fafa6e','#2A4858'])
-    .mode('lch').colors(6);
+	
+	//chroma color scale
+	var colorScale = chroma.scale(['#fafa6e','#2A4858']).mode('lch').colors(6);
 
 	console.log(limits);
 
