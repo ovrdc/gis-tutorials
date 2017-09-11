@@ -1,143 +1,185 @@
 ---
 title: Mapbox GL JS
-subtitle: Choropleth from Joined Data
+subtitle: "Choropleth: Vector Tiles with Joined Data"
 description: >-
-  This example is based on the [Mapbox example](https://www.mapbox.com/mapbox-gl-js/example/data-join/) with the addition of color scales and quintile breaks from chroma.js. These values could also be used to create a legend or interactive buttons to change to scale and styling of the data.
-js: '<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js" integrity="sha256-sTTE1lDQFmk1nQ4uuhafJjR3/t8vwQPmxorZes3v3G0=" crossorigin="anonymous"></script>'
+  This example is based on the [Mapbox example](https://www.mapbox.com/mapbox-gl-js/example/data-join/) with the addition of color scales and quintile breaks from chroma.js. It uses 2015 overdose death rate categories from the [National Center for Health Statistics](https://www.cdc.gov/nchs/). Since these values are loaded into the map, they could also be used to create a legend or interactive buttons to change to scale and styling of the data.
+js: >-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js" integrity="sha256-sTTE1lDQFmk1nQ4uuhafJjR3/t8vwQPmxorZes3v3G0=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />'
+css: >-
+  .legend {
+    color: #555;
+    position: absolute;
+    padding: 6px 8px;
+    font: 12px Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+  }
+  .legend ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  clear: both;
+  }
+  .legend li {
+  display: inline-block;
+  width: 20%;
+  height: 22px;
+  opacity: 0.7;
+  }
+  .legend .min {
+  float: left;
+  padding-bottom: 5px;
+  }
+  .legend .max {
+  float: right;
+  }
 ---
-{% include mapbox/01-blank-map.js %}
+/*Blank Mapbox GL Map*/
 
-// Join local JSON data with vector tile geometry
-// USA unemplyoment rate in 2009
-// Source https://data.bls.gov/timeseries/LNS14000000
-var maxValue = 13.17;
-var data = [
-    {"s": "01", "u": 13.17},
-    {"s": "02", "u": 9.5},
-    {"s": "04", "u": 12.15},
-    {"s": "05", "u": 8.99},
-    {"s": "06", "u": 11.83},
-    {"s": "08", "u": 7.52},
-    {"s": "09", "u": 6.44},
-    {"s": "10", "u": 5.17},
-    {"s": "12", "u": 9.67},
-    {"s": "13", "u": 10.64},
-    {"s": "15", "u": 12.38},
-    {"s": "16", "u": 10.13},
-    {"s": "17", "u": 9.58},
-    {"s": "18", "u": 10.63},
-    {"s": "19", "u": 8.09},
-    {"s": "20", "u": 5.93},
-    {"s": "21", "u": 9.86},
-    {"s": "22", "u": 9.81},
-    {"s": "23", "u": 7.82},
-    {"s": "24", "u": 8.35},
-    {"s": "25", "u": 9.1},
-    {"s": "26", "u": 10.69},
-    {"s": "27", "u": 11.53},
-    {"s": "28", "u": 9.29},
-    {"s": "29", "u": 9.94},
-    {"s": "30", "u": 9.29},
-    {"s": "31", "u": 5.45},
-    {"s": "32", "u": 4.21},
-    {"s": "33", "u": 4.27},
-    {"s": "34", "u": 4.09},
-    {"s": "35", "u": 7.83},
-    {"s": "36", "u": 8.01},
-    {"s": "37", "u": 9.34},
-    {"s": "38", "u": 11.23},
-    {"s": "39", "u": 7.08},
-    {"s": "40", "u": 11.22},
-    {"s": "41", "u": 6.2},
-    {"s": "42", "u": 9.11},
-    {"s": "44", "u": 10.42},
-    {"s": "45", "u": 8.89},
-    {"s": "46", "u": 11.03},
-    {"s": "47", "u": 7.35},
-    {"s": "48", "u": 8.92},
-    {"s": "49", "u": 7.65},
-    {"s": "50", "u": 8.01},
-    {"s": "51", "u": 7.62},
-    {"s": "53", "u": 7.77},
-    {"s": "54", "u": 8.49},
-    {"s": "55", "u": 9.42},
-    {"s": "56", "u": 7.59}
-];
+var style = {
+  "version": 8,
+  "name": "blank",
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": ""
+    }
+  },
+  "layers": [{
+    "id": "background",
+    "type": "background",
+    "paint": {
+      "background-color": "#1d1f20"
+    }
+  }]
+};
 
-// Get the vector geometries to join
-// US Census Data Source
-// https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html
-var layerName = "statesus";
-var vtMatchProp = "GEOID";
-var dataMatchProp = "s";
-var dataStyleProp = "u";
+var map = new mapboxgl.Map({
+  container: 'map',
+  hash: true,
+  style: style,
+  center: [-95.39, 39.15],
+  zoom: 3.4,
+  debug: 1
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new mapboxgl.FullscreenControl());
+
+/*End Blank Map*/
 
 map.on('load', function() {
 
+  var maxValue = 16;
+  var jsonData;
+  $.getJSON("/gis-tutorials/tutorial-data/nchs_overdose_2015.json")
+    .done(function(data) {
+      console.log('json data loaded');
+      //console.log(data);
+      jsonData = data;
+      buildMap();
+    });
+
+  function buildMap() {
+
+    // Get the vector geometries to join
+    // US Census Data Source
+    // https://www.census.gov/geo/maps-data/data/cbf/cbf_county.html
+    var layerName = "uscounties";
+    var vtMatchProp = "GEOID";
+    var dataMatchProp = "geoid";
+    var dataStyleProp = "category";
+
     // Add source for state polygons hosted by OVRDC Node JS Tileserver
-    map.addSource("states", {
-        type: "vector",
-        tiles: ["https://tileserver.ovrdc.org/tigerusstates/{z}/{x}/{y}.pbf"]
+    map.addSource("source", {
+      type: "vector",
+      tiles: ["https://tileserver.ovrdc.org/us_counties/{z}/{x}/{y}.pbf"]
     });
 
     // First value is the default, used where the is no data
     var stops = [];
 
-    // Calculate color for each state based on the unemployment rate
+    // Calculate color for each state based on the overdose death rate
 
-	var numbers = data.map(function(val) {
-		return val[dataStyleProp]
-	});
+    var numbers = jsonData.map(function(val) {
+      return Number(val[dataStyleProp])
+    });
 
-	var numbersIndex = data.map(function(val) {
-		var index = val.s + "|" + val[dataStyleProp];
-		return index
-	});
+    //console.log(numbers);
 
-	console.log(numbers);
-	console.log(numbersIndex);
+    var numbersIndex = jsonData.map(function(val) {
+      var index = val[dataMatchProp] + "|" + val[dataStyleProp];
+      return index
+    });
 
-	//chroma quantile scale
-	var limits = chroma.limits(numbers, 'q', 5);
-	
-	//chroma color scale
-	var colorScale = chroma.scale(['#fafa6e','#2A4858']).mode('lch').colors(6);
+    //console.log(numbersIndex);
 
-	console.log(limits);
+    //chroma quantile scale
+    var limits = chroma.limits(numbers, 'q', 4);
 
-	console.log(colorScale);
+    //chroma color scale
+    var colorScale = chroma.scale(['#fafa6e', '#2A4858']).mode('lch').colors(5);
 
-	var newData = data.map(function(state) {
+    console.log(limits);
 
-		var color = "#fafa6e";
+    console.log(colorScale);
 
-		for (var i=0; i < limits.length; i++) {
-			if (state[dataStyleProp] <= limits[i]) {
-				color = colorScale[i];
-				break;
-				}
-			}
+    var newData = jsonData.map(function(county) {
 
-		var id = state[dataMatchProp];
-		return [id, color]
-	});
+      var color = "#fafa6e";
 
-	console.log(newData);
+      for (var i = 0; i < limits.length; i++) {
+        if (county[dataStyleProp] <= limits[i]) {
+          color = colorScale[i];
+          break;
+        }
+      }
+
+      var id = county[dataMatchProp];
+      return [id, color]
+    });
+
+    console.log(newData);
 
     // Add layer from the vector tile source with data-driven style
     map.addLayer({
-        "id": "states-join",
-        "type": "fill",
-        "source": "states",
-        "source-layer": layerName,
-        "paint": {
-            "fill-color": {
-                "property": vtMatchProp,
-                "type": "categorical",
-                "stops": newData
-            },
-            "fill-opacity": 0.7,
-            "fill-outline-color": "gray"
-          }
+      "id": "joined-data",
+      "type": "fill",
+      "source": "source",
+      "source-layer": layerName,
+      "paint": {
+        "fill-color": {
+          "property": vtMatchProp,
+          "type": "categorical",
+          "stops": newData
+        },
+        "fill-opacity": 0.7,
+        "fill-outline-color": "hsla(11,0%,75%,1)"
+      }
     });
+    var div = document.createElement('DIV');
+    div.className = 'legend';
+    /* Add min & max*/
+    var labels = []
+    div.innerHTML = '<div><h3 style="font-weight:bolder;font-size:larger;">Drug Overdose Death Rates 2015</h3><br> \
+      </div><div class="labels"><div class="min">Low</div> \
+      <div class="max">High</div></div>'
+
+    for (i = 0; i < colorScale.length; i++) {
+      labels.push('<li style="background-color: ' + colorScale[i] + '"></li>')
+    }
+
+    div.innerHTML += '<ul style="list-style-type:none;display:flex">' + labels.join('') + '</ul>'
+    document.getElementById('map').appendChild(div);
+  }
 });
