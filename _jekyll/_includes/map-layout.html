@@ -5,6 +5,11 @@
         {% if page.description %}
         <div class="content">
           {{page.description | markdownify}}
+          {% if page.quote %}
+          <blockquote>
+            {{page.quote | markdownify}}
+          </blockquote>
+          {% endif %}
         </div>
         {% endif %}
       </div>

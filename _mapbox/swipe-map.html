@@ -1,0 +1,218 @@
+---
+title: Mapbox GL JS
+subtitle: "Compare Two Maps: Swipe Map Plugin"
+description: >-
+  Comparing two maps in Mapbox GL JS is easy with the [Swipe Map](https://www.mapbox.com/mapbox-gl-js/example/mapbox-gl-compare/) plugin. The map below uses data from the [National Center for Health Statistics](https://www.cdc.gov/nchs/products/databriefs/db273.htm) to compare drug overdose death rates from 1999-2015. The same process used to join data from a json file to vector tiles in this map is the same as used in the [previous map](/gis-tutorials/mapbox/06-choropleth-data-join/), and documented in the [official Mapbox examples](https://www.mapbox.com/mapbox-gl-js/example/data-join/).
+quote: The age-adjusted rate of drug overdose deaths in the United States in 2015 (16.3 per 100,000) was more than 2.5 times the rate in 1999 (6.1). ~ NCHS
+js: >-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js" integrity="sha256-sTTE1lDQFmk1nQ4uuhafJjR3/t8vwQPmxorZes3v3G0=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
+css: >-
+  .legend {
+    color: #555;
+    position: absolute;
+    padding: 6px 8px;
+    font: 12px Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+  }
+  .legend ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  clear: both;
+  }
+  .legend li {
+  display: inline-block;
+  width: 20%;
+  height: 22px;
+  opacity: 0.7;
+  }
+  .legend .min {
+  float: left;
+  padding-bottom: 5px;
+  }
+  .legend .max {
+  float: right;
+  }
+  .map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+---
+var mapContainer = document.getElementById('map');
+var beforeDiv = document.createElement('div');
+beforeDiv.id = "before";
+beforeDiv.className = 'map';
+var afterDiv = document.createElement('div');
+afterDiv.id = "after";
+afterDiv.className = 'map';
+mapContainer.appendChild(beforeDiv);
+mapContainer.appendChild(afterDiv);
+
+/*Blank Mapbox GL Map with tile sources loaded*/
+
+var style = {
+  "version": 8,
+  "name": "blank",
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": ""
+    },
+    "source": {
+      type: "vector",
+      tiles: ["https://tileserver.ovrdc.org/us_counties/{z}/{x}/{y}.pbf"]
+    }
+  },
+  "layers": [{
+    "id": "background",
+    "type": "background",
+    "paint": {
+      "background-color": "#1d1f20"
+    }
+  }]
+};
+
+var beforeMap = new mapboxgl.Map({
+    container: 'before',
+    style: style,
+    center: [-95.39, 39.15],
+    zoom: 3.4
+});
+
+var afterMap = new mapboxgl.Map({
+    container: 'after',
+    style: style,
+    center: [-95.39, 39.15],
+    zoom: 3.4
+});
+
+var map = new mapboxgl.Compare(beforeMap, afterMap, {
+//  mousemove: true
+});
+
+afterMap.addControl(new mapboxgl.NavigationControl());
+
+/*Cannot figure out FullscreenControl for both maps*/
+/*afterMap.addControl(new mapboxgl.FullscreenControl());
+beforeMap.addControl(new mapboxgl.FullscreenControl(), "top-left");*/
+
+afterMap.on('load', function() {
+
+  var maxValue = 16;
+  var jsonData2015, jsonData1999;
+
+  $.getJSON("/gis-tutorials/tutorial-data/nchs_overdose_2015.json")
+    .done(function(data) {
+      console.log('json data loaded');
+      //console.log(data);
+      jsonData2015 = data;
+      buildMap(jsonData2015, afterMap, true);
+    });
+
+  $.getJSON("/gis-tutorials/tutorial-data/nchs_overdose_1999.json")
+    .done(function(data) {
+      console.log('json data loaded');
+      //console.log(data);
+      jsonData1999 = data;
+      buildMap(jsonData1999, beforeMap, null);
+    });
+
+  function buildMap(data, mapname, x) {
+
+    var layerName = "uscounties";
+    var vtMatchProp = "GEOID";
+    var dataMatchProp = "geoid";
+    var dataStyleProp = "category";
+
+    // First value is the default, used where the is no data
+    var stops = [];
+
+    // Calculate color for each state based on the overdose death rate
+
+    var numbers = data.map(function(val) {
+      return Number(val[dataStyleProp])
+    });
+
+    //console.log(numbers);
+
+    var numbersIndex = data.map(function(val) {
+      var index = val[dataMatchProp] + "|" + val[dataStyleProp];
+      return index
+    });
+
+    //console.log(numbersIndex);
+
+    //chroma quantile scale
+    var limits = chroma.limits([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16], 'e', 5);
+
+    //chroma color scale
+    var colorScale = chroma.scale(['#fafa6e', '#2A4858']).mode('lch').colors(6);
+
+    console.log(limits);
+
+    console.log(colorScale);
+
+    var newData = data.map(function(county) {
+
+      var color = "#fafa6e";
+
+      for (var i = 0; i < limits.length; i++) {
+        if (county[dataStyleProp] <= limits[i]) {
+          color = colorScale[i];
+          break;
+        }
+      }
+
+      var id = county[dataMatchProp];
+      return [id, color]
+    });
+
+    //console.log(newData);
+
+    // Add layer from the vector tile source with data-driven style
+    mapname.addLayer({
+      "id": "joined-data",
+      "type": "fill",
+      "source": "source",
+      "source-layer": layerName,
+      "paint": {
+        "fill-color": {
+          "property": vtMatchProp,
+          "type": "categorical",
+          "stops": newData
+        },
+        "fill-opacity": 0.7,
+        "fill-outline-color": "hsla(11,0%,75%,1)"
+      }
+    });
+    if (x != null) {
+      var div = document.createElement('DIV');
+      div.className = 'legend';
+      /* Add min & max*/
+      var labels = []
+      div.innerHTML = '<div><h3 style="font-weight:bolder;font-size:larger;">Drug Overdose Death Rates</h3><br> \
+      </div><div class="labels"><div class="min"><em>&nbsp;0-4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;per 100,000 persons</div> \
+        <div class="max">30+</em></div></div>'
+
+      for (i = 0; i < colorScale.length; i++) {
+        labels.push('<li style="background-color: ' + colorScale[i] + '"></li>')
+      }
+
+      div.innerHTML += '<ul style="list-style-type:none;display:flex">' + labels.join('') + '</ul>'
+      document.getElementById('after').appendChild(div);
+    }
+  }
+});
