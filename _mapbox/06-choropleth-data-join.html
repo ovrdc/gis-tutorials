@@ -45,7 +45,6 @@ css: >-
   }
 ---
 /*Blank Mapbox GL Map*/
-mapbox.accessToken = "pk.eyJ1Ijoib3ZyZGMiLCJhIjoiY2plcjdvM2ZqMjVvMDJ4bzA0bnFza3E2diJ9.BwFwfpe61ZU1AbEubs2nQA";
 var style = {
   "version": 8,
   "name": "blank",
@@ -79,7 +78,8 @@ map.addControl(new mapboxgl.FullscreenControl());
 /*End Blank Map*/
 
 map.on('load', function() {
-
+mapbox.accessToken = "pk.eyJ1Ijoib3ZyZGMiLCJhIjoiY2plcjdvM2ZqMjVvMDJ4bzA0bnFza3E2diJ9.BwFwfpe61ZU1AbEubs2nQA";
+/*use your own token please : ) */
   var maxValue = 16;
   var jsonData;
   $.getJSON("/gis-tutorials/tutorial-data/nchs_overdose_2015.json")
