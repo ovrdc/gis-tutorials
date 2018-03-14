@@ -45,7 +45,7 @@ css: >-
   }
 ---
 /*Blank Mapbox GL Map*/
-
+mapbox.accessToken = "pk.eyJ1Ijoib3ZyZGMiLCJhIjoiY2plcjdvM2ZqMjVvMDJ4bzA0bnFza3E2diJ9.BwFwfpe61ZU1AbEubs2nQA";
 var style = {
   "version": 8,
   "name": "blank",
@@ -103,7 +103,7 @@ map.on('load', function() {
     // Add source for state polygons hosted by OVRDC Node JS Tileserver
     map.addSource("source", {
       type: "vector",
-      tiles: ["https://tileserver.ovrdc.org/tiles/us_counties/{z}/{x}/{y}.pbf"]
+      url: "mapbox://ovrdc.18vllzwu"
     });
 
     // First value is the default, used where the is no data
