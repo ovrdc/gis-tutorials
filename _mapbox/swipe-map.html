@@ -60,7 +60,7 @@ afterDiv.id = "after";
 afterDiv.className = 'map';
 mapContainer.appendChild(beforeDiv);
 mapContainer.appendChild(afterDiv);
-
+mapbox.accessToken = "pk.eyJ1Ijoib3ZyZGMiLCJhIjoiY2plcjdvM2ZqMjVvMDJ4bzA0bnFza3E2diJ9.BwFwfpe61ZU1AbEubs2nQA"
 /*Blank Mapbox GL Map with tile sources loaded*/
 
 var style = {
@@ -73,7 +73,7 @@ var style = {
     },
     "source": {
       type: "vector",
-      tiles: ["https://tileserver.ovrdc.org/tiles/us_counties/{z}/{x}/{y}.pbf"]
+      url:"mapbox://ovrdc.18vllzwu"
     }
   },
   "layers": [{
